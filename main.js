@@ -71,6 +71,9 @@ function formatNumberWithCommas(num) {
 
 function notate(expnum, fp) {
     const exp = ExpantaNum(expnum);
+    if (exp.slog(10).gte(5)) {
+        return exp.toHyperE();
+    }
     if (exp.lt("1e12")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1000000000000000) && exp.slog(10).gte(1.5)) {
@@ -91,6 +94,7 @@ function notate(expnum, fp) {
     }
 }
 
+
 function render() {
     const notationFunc = useAltNotation ? notateAlt : notate;
     document.getElementById('points').innerText = notationFunc(points, 5);
@@ -108,6 +112,9 @@ function render() {
 
 function notateAlt(expnum, fp) {
     const exp = ExpantaNum(expnum);
+    if (exp.slog(10).gte(5)) {
+        return exp.toHyperE();
+    }
     if (exp.lt("1e9")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1.5)) {
@@ -136,12 +143,12 @@ function toggleNotation() {
     useAltNotation = !useAltNotation;
 }
 function obfuscateData(str) {
-    const shift = Math.floor(Math.random() * 256);  // Random shift for obfuscation
+    const shift = Math.floor(Math.random() * 256);
     let obfuscated = '';
     for (let i = 0; i < str.length; i++) {
         obfuscated += String.fromCharCode(str.charCodeAt(i) + shift);
     }
-    return { obfuscatedData: obfuscated, shift: shift };  // Return both the obfuscated data and the shift value
+    return { obfuscatedData: obfuscated, shift: shift };
 }
 
 function deobfuscateData(obfuscatedData, shift) {
@@ -204,7 +211,6 @@ function saveGame() {
     const encodedSave = toBase64(obfuscatedData);
 
     if (encodedSave) {
-        // Store the encoded data along with the shift value for deobfuscation
         const saveWithShift = JSON.stringify({ data: encodedSave, shift: shift });
         localStorage.setItem('gameSave', saveWithShift);
     } else {
