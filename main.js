@@ -53,7 +53,7 @@ function update() {
         }
 
         if (i === 0 && upgrades.gen1Boost3.gt(0)) {
-            const boostFactor = ExpantaNum.max(gen.count.log10().tetrate(1.15), 1);
+            const boostFactor = ExpantaNum(gen.count.log10().tetrate(1.15));
             gen.prod = gen.prod.pow(boostFactor);
         }
 
