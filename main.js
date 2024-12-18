@@ -271,6 +271,33 @@ function loadGame() {
     }
 }
 
+const initialGeneratorCosts = generators.map(gen => gen.cost);
+
+function resetGame() {
+    if (confirm("Are you sure you want to reset your progress?")) {
+        localStorage.removeItem('gameSave');
+        points = ExpantaNum(0);
+        generators.forEach((gen, index) => {
+            gen.count = ExpantaNum(0);
+            gen.prod = ExpantaNum(0);
+            gen.cost = initialGeneratorCosts[index];
+        });
+        generators[0].count = ExpantaNum(1);
+        rebirthPoints = ExpantaNum(0);
+        upgrades = {
+            gen1Boost1: ExpantaNum(0),
+            gen2Boost1: ExpantaNum(0),
+            gen1Boost2: ExpantaNum(0),
+            gen2Boost2: ExpantaNum(0),
+            gen1Boost3: ExpantaNum(0),
+        };
+        playtime = 0;
+        lastUpdateTime = performance.now();
+        render();
+        renderRebirth();
+    }
+}
+
 const notationModalHTML = `
 <div id="notationModal" class="modal" style="display: none; position: fixed; z-index: 1000; inset-block-start: 0; inset-inline-start: 0; inline-size: 100%; block-size: 100%; background-color: rgba(0, 0, 0, 0.8);">
   <div class="modal-content" style="background-color: black; margin: 10% auto; padding: 20px; border: 1px solid #888; inline-size: 80%; max-inline-size: 600px; box-sizing: border-box;">
