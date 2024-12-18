@@ -411,4 +411,4 @@ loadGame();
 
 setInterval(() => {
     saveGame();
-}, 1);
+}, 100);
