@@ -266,7 +266,7 @@ function renderTranscend() {
     }
 
     if (boost1FormulaElement) {
-        boost1FormulaElement.innerText = "Formula: points^factorial(log(points^transcend))";
+        boost1FormulaElement.innerText = "Formula: boost gen1 prod by ^points^factorial(log(points^transcend))";
     }
 
     if (boost2FormulaElement) {
