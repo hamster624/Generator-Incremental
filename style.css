@@ -481,9 +481,6 @@ button {
     background-color: #a0e8a0;
 }
 
-button:hover {
-    background-color: #ffffff;
-}
 #openMenuButton {
     position: fixed;
     inset-block-start: 200px;
