@@ -18,81 +18,136 @@ function clickToIncreaseScore() {
     clickerScore++;
     document.getElementById("clickerScore").textContent = clickerScore;
 }
+const memoryGameState = {
+    cards: [],
+    flippedCards: [],
+    matchedPairs: 0,
+    totalPairs: 0,
+    lockBoard: false,
+};
+
+function resetMemoryGameState() {
+    const values = [];
+    const numPairs = 12;
+    for (let i = 1; i <= numPairs; i++) {
+        values.push(i, i);
+    }
+    values.push(null);
+
+    for (let i = values.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [values[i], values[j]] = [values[j], values[i]];
+    }
+
+    memoryGameState.cards = values.map(value => ({
+        value,
+        matched: false,
+    }));
+    memoryGameState.flippedCards = [];
+    memoryGameState.matchedPairs = 0;
+    memoryGameState.totalPairs = numPairs;
+    memoryGameState.lockBoard = false;
+}
 
 function startMemoryGame() {
-    memoryGameCards = generateMemoryCards();
-    matchedPairs = 0;
-    flippedCards = [];
-    const gameBoard = document.createElement('div');
-    gameBoard.classList.add('memory-game');
+    if (memoryGameState.cards.length === 0) {
+        resetMemoryGameState();
+    }
+    renderMemoryGame();
+}
 
-    memoryGameCards.forEach((card, index) => {
-        const cardElement = document.createElement('div');
-        cardElement.classList.add('memory-card');
-        cardElement.setAttribute('data-index', index);
-        cardElement.addEventListener('click', flipCard);
-        gameBoard.appendChild(cardElement);
+function renderMemoryGame() {
+    const gameArea = document.getElementById("gameArea");
+    gameArea.innerHTML = `<h3>Memory Game</h3>
+    <button onclick="resetMemoryGameState(); renderMemoryGame();">Shuffle</button>
+    <button onclick="closeGame()">Close Game</button>`;
+    const board = document.createElement("div");
+    board.classList.add("memory-board");
+
+    memoryGameState.cards.forEach((card, index) => {
+        if (!card.value) return;
+
+        const cardElement = document.createElement("div");
+        cardElement.classList.add("memory-card");
+
+        if (card.matched || memoryGameState.flippedCards.includes(index)) {
+            cardElement.classList.add("flipped");
+            cardElement.textContent = card.value;
+        } else {
+            cardElement.textContent = '';
+        }
+
+        cardElement.addEventListener("click", () => flipMemoryCard(index));
+        board.appendChild(cardElement);
     });
 
-    document.getElementById("gameArea").innerHTML = `
-        <h3>Memory Card Matching</h3>
-        <p>Click to flip the cards and match pairs!</p>
-        <button onclick="closeGame()">Close Game</button>
-    `;
-    document.getElementById("gameArea").appendChild(gameBoard);
+    board.style.display = "grid";
+    board.style.gridTemplateColumns = "repeat(5, 1fr)";
+    board.style.gap = "5px";
+    gameArea.appendChild(board);
 }
 
-function generateMemoryCards() {
-    const cardValues = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-    const cards = [...cardValues, ...cardValues];
-    return shuffle(cards);
-}
+function flipMemoryCard(index) {
+    if (memoryGameState.lockBoard || memoryGameState.flippedCards.includes(index) || memoryGameState.cards[index].matched) return;
 
-function shuffle(array) {
-    let currentIndex = array.length, randomIndex, temporaryValue;
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-    return array;
-}
+    memoryGameState.flippedCards.push(index);
+    renderMemoryGame();
 
-function flipCard() {
-    if (flippedCards.length === 2 || this.classList.contains('flipped') || this.classList.contains('matched')) return;
-
-    this.classList.add('flipped');
-    const cardIndex = this.getAttribute('data-index');
-    this.textContent = memoryGameCards[cardIndex];
-    flippedCards.push(this);
-
-    if (flippedCards.length === 2) {
-        checkForMatch();
+    if (memoryGameState.flippedCards.length === 2) {
+        memoryGameState.lockBoard = true;
+        setTimeout(checkMemoryMatch, 1000);
     }
 }
 
-function checkForMatch() {
-    const [firstCard, secondCard] = flippedCards;
-    if (memoryGameCards[firstCard.getAttribute('data-index')] === memoryGameCards[secondCard.getAttribute('data-index')]) {
-        firstCard.classList.add('matched');
-        secondCard.classList.add('matched');
-        matchedPairs++;
+function checkMemoryMatch() {
+    const [firstIndex, secondIndex] = memoryGameState.flippedCards;
+    const firstCard = memoryGameState.cards[firstIndex];
+    const secondCard = memoryGameState.cards[secondIndex];
 
-        if (matchedPairs === totalPairs) {
-            alert("You Win! All pairs matched!");
+    if (firstCard.value === secondCard.value) {
+        firstCard.matched = true;
+        secondCard.matched = true;
+        memoryGameState.matchedPairs++;
+
+        if (memoryGameState.matchedPairs === memoryGameState.totalPairs) {
+            setTimeout(() => {
+                alert("You Win! All pairs matched!");
+                resetMemoryGameState();
+                renderMemoryGame();
+            }, 500);
         }
-    } else {
-        setTimeout(() => {
-            firstCard.classList.remove('flipped');
-            secondCard.classList.remove('flipped');
-            firstCard.textContent = '';
-            secondCard.textContent = '';
-        }, 1000);
     }
 
-    flippedCards = [];
+    memoryGameState.flippedCards = [];
+    memoryGameState.lockBoard = false;
+    renderMemoryGame();
+}
+
+function saveMemoryGameStateToSaveGame(saveData) {
+    saveData.memoryGame = {
+        cards: memoryGameState.cards.map(card => ({
+            value: card.value,
+            matched: card.matched
+        })),
+        flippedCards: memoryGameState.flippedCards,
+        matchedPairs: memoryGameState.matchedPairs,
+        totalPairs: memoryGameState.totalPairs,
+    };
+}
+
+function loadMemoryGameStateFromSaveGame(saveData) {
+    if (saveData.memoryGame) {
+        memoryGameState.cards = saveData.memoryGame.cards.map(card => ({
+            value: card.value,
+            matched: card.matched
+        }));
+        memoryGameState.flippedCards = saveData.memoryGame.flippedCards;
+        memoryGameState.matchedPairs = saveData.memoryGame.matchedPairs;
+        memoryGameState.totalPairs = saveData.memoryGame.totalPairs;
+        memoryGameState.lockBoard = false;
+    } else {
+        resetMemoryGameState();
+    }
 }
 
 let isGameRunning = false;
