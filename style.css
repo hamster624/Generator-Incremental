@@ -30,7 +30,6 @@ main {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
 }
 
-/* Generator Card Styles */
 .generator {
     padding: 20px;
     background-color: #1e1e1e;
@@ -475,7 +474,7 @@ button {
 }
 
 .memory-card.flipped {
-    background-color: #fff;
+    background-color: #000000;
 }
 
 .memory-card.matched {
