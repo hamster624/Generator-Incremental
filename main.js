@@ -194,6 +194,7 @@ function fromBase64(base64) {
 function saveGame() {
     const saveData = {
         points: points.toString(),
+        clickerScore: clickerScore.toString(),
         generators: generators.map(gen => ({
             count: gen.count.toString(),
             cost: gen.cost.toString(),
@@ -210,7 +211,16 @@ function saveGame() {
             boost1: transcendBoosts.boost1,
             boost2: transcendBoosts.boost2
         },
-        playtime: playtime.toString()
+        playtime: playtime.toString(),
+        memoryGame: {
+            cards: memoryGameState.cards.map(card => ({
+                value: card.value,
+                matched: card.matched
+            })),
+            flippedCards: memoryGameState.flippedCards,
+            matchedPairs: memoryGameState.matchedPairs,
+            totalPairs: memoryGameState.totalPairs
+        }
     };
 
     let saveDataString = JSON.stringify(saveData);
@@ -246,6 +256,8 @@ function loadGame() {
             const saveData = JSON.parse(saveDataString);
 
             points = ExpantaNum(saveData.points);
+            clickerScore = ExpantaNum(saveData.clickerScore || 0);
+
             generators.forEach((gen, i) => {
                 gen.count = ExpantaNum(saveData.generators[i].count);
                 gen.cost = ExpantaNum(saveData.generators[i].cost);
@@ -261,27 +273,22 @@ function loadGame() {
                     gen.upgrades[index].level = ExpantaNum(level);
                 });
             });
+
             rebirthPoints = ExpantaNum(saveData.rebirthPoints);
             Object.entries(saveData.upgrades).forEach(([key, value]) => {
                 upgrades[key] = ExpantaNum(value);
             });
-
-            // Initialize transcendBoosts if it's not in saveData
             transcendBoosts = saveData.transcendBoosts || {
                 boost1: false,
                 boost2: false
             };
-
-            // Ensure transcendPoints is initialized correctly as an ExpantaNum
             transcendPoints = ExpantaNum(saveData.transcendPoints || 0);
-
-            // If transcendPoints is still NaN, reset it to zero
             if (transcendPoints.isNaN()) {
                 transcendPoints = ExpantaNum(0);
             }
 
             transcendCount = saveData.transcendCount || 0;
-            transcendBaseCost = ExpantaNum(saveData.transcendBaseCost || "1e120");
+            transcendBaseCost = ExpantaNum(saveData.transcendBaseCost || "1ee120");
             transcendCostMultiplier = ExpantaNum(saveData.transcendCostMultiplier || 1.5);
 
             applyUpgrades();
@@ -291,6 +298,17 @@ function loadGame() {
             if (isNaN(playtime)) {
                 playtime = 0;
             }
+            if (saveData.memoryGame) {
+                memoryGameState.cards = saveData.memoryGame.cards.map(card => ({
+                    value: card.value,
+                    matched: card.matched
+                }));
+                memoryGameState.flippedCards = saveData.memoryGame.flippedCards;
+                memoryGameState.matchedPairs = saveData.memoryGame.matchedPairs;
+                memoryGameState.totalPairs = saveData.memoryGame.totalPairs;
+            } else {
+                resetMemoryGameState();
+            }
 
             updateStatsOverlay();
         } catch (error) {
@@ -298,7 +316,6 @@ function loadGame() {
         }
     }
 }
-
 const initialGeneratorCosts = generators.map(gen => gen.cost);
 
 function resetGame() {
@@ -320,13 +337,12 @@ function resetGame() {
             gen1Boost3: ExpantaNum(0),
         };
 
-        // Reset transcend data
         transcendPoints = ExpantaNum(0);
         transcendBoosts = {
             boost1: false,
             boost2: false
         };
-
+        clickerScore = 0;
         playtime = 0;
         lastUpdateTime = performance.now();
         render();
@@ -396,10 +412,8 @@ function showDeviceModal() {
   }
   
   document.body.insertAdjacentHTML('beforeend', `
-      <div id="overlay" style="position: fixed; inset-block-start: 0; inset-inline-start: 0; padding: 10px; background-color: rgba(0, 0, 0, 0.7); color: white; font-size: 14px; z-index: 1000;">
-          <div id="overlay-points">Points: 0</div>
-          <div id="overlay-rebirth-points">Rebirth Points: 0</div>
-          <div id="overlay-playtime" style="position: absolute; inset-block-start: 200px;">Playtime: 00:00:00:00.000</div>
+      <div id="overlay" style="position: fixed; inset-block-start: 0; inset-inline-start: 0; padding: 10px; background-color: rgba(7, 2, 2, 0.7); color: white; font-size: 14px; z-index: 1000;">
+          <div id="overlay-playtime" style="position: absolute; inset-block-start: 275px;">Playtime: 00:00:00:00.000</div>
       </div>
   `);
   
