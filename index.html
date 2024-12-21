@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Incremental</title>
+    <script src="ExpantaNum.js"></script>
+    <script src="resets.js"></script>
+    <script src="calculator.js"></script>
+    <script src="admin.js"></script>
+    <script src="save.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="main.js"></script>
+
+    <div id="stats-overlay">
+        <h2>Stats</h2>
+        <p>Points: <span id="overlay-points">0</span></p>
+        <p>Rebirth Points: <span id="overlay-rebirth-points">0</span></p>
+    </div>
+    
+</head>
+<body>
+    <header>
+        <h1>Generator Incremental</h1>
+        <p id="subtext">Current endgame:Over 1ee100,000</p>
+        <h2>Points: <span id="points">0</span></h2>
+    </header>
+
+    <main>
+        <div class="generator" id="gen1">
+            <h3>Generator 1</h3>
+            <p>Produces Points: <span id="gen1prod">0</span>/sec</p>
+            <p>Owned: <span id="gen1count">1</span></p>
+            <button onclick="buyGenerator(1)">Buy Generator 1 (Cost: <span id="gen1cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen2">
+            <h3>Generator 2</h3>
+            <p>Produces Generator 1: <span id="gen2prod">0</span>/sec</p>
+            <p>Owned: <span id="gen2count">0</span></p>
+            <button onclick="buyGenerator(2)">Buy Generator 2 (Cost: <span id="gen2cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen3">
+            <h3>Generator 3</h3>
+            <p>Produces Generator 2: <span id="gen3prod">0</span>/sec</p>
+            <p>Owned: <span id="gen3count">0</span></p>
+            <button onclick="buyGenerator(3)">Buy Generator 3 (Cost: <span id="gen3cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen4">
+            <h3>Generator 4</h3>
+            <p>Produces Generator 3: <span id="gen4prod">0</span>/sec</p>
+            <p>Owned: <span id="gen4count">0</span></p>
+            <button onclick="buyGenerator(4)">Buy Generator 4 (Cost: <span id="gen4cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen5">
+            <h3>Generator 5</h3>
+            <p>Produces Generator 4: <span id="gen5prod">0</span>/sec</p>
+            <p>Owned: <span id="gen5count">0</span></p>
+            <button onclick="buyGenerator(5)">Buy Generator 5 (Cost: <span id="gen5cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen6">
+            <h3>Generator 6</h3>
+            <p>Produces Generator 5: <span id="gen6prod">0</span>/sec</p>
+            <p>Owned: <span id="gen6count">0</span></p>
+            <button onclick="buyGenerator(6)">Buy Generator 6 (Cost: <span id="gen6cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen7">
+            <h3>Generator 7</h3>
+            <p>Produces Generator 6: <span id="gen7prod">0</span>/sec</p>
+            <p>Owned: <span id="gen7count">0</span></p>
+            <button onclick="buyGenerator(7)">Buy Generator 7 (Cost: <span id="gen7cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen8">
+            <h3>Generator 8</h3>
+            <p>Produces Generator 7: <span id="gen8prod">0</span>/sec</p>
+            <p>Owned: <span id="gen8count">0</span></p>
+            <button onclick="buyGenerator(8)">Buy Generator 8 (Cost: <span id="gen8cost"></span>)</button>
+        </div>
+
+        <div class="generator" id="gen9">
+            <h3>Generator 9</h3>
+            <p>Produces Generator 8: <span id="gen9prod">0</span>/sec</p>
+            <p>Owned: <span id="gen9count">0</span></p>
+            <button onclick="buyGenerator(9)">Buy Generator 9 (Cost: <span id="gen9cost"></span>)</button>
+        </div>
+
+        <button onclick="resetGame()">Reset Game</button>
+        <button onclick="toggleNotation()">Toggle Notation</button>
+        <button onclick="toggleGuide()">Open Guide</button>
+
+        <div class="guide-container" id="guide">
+          <button id="closeGuide" onclick="toggleGuide()">X</button>
+          <div class="guide-section">
+            <h3 onclick="toggleSection('rebirth')">Rebirth</h3>
+            <div class="guide-section-content" id="rebirth">
+              <textarea rows="5" cols="50" placeholder="The first reset layer. Basically the start of your journey. Formula:log(log(ln(sqrt(points)))) a bit overkill"></textarea>
+            </div>
+          </div>
+          <div class="guide-section">
+            <h3 onclick="toggleSection('transcend')">Transcend</h3>
+            <div class="guide-section-content" id="transcend">
+              <textarea rows="5" cols="50" placeholder="The second reset layer. Nothing much to know here. Formula:slog(cbrt(points))"></textarea>
+            </div>
+          </div>
+          <div class="guide-section">
+            <h3 onclick="toggleSection('notation')">Notation Guide</h3>
+            <div class="guide-section-content" id="notation">
+              <textarea rows="5" cols="50" placeholder="Scientific notation:1e12 means 1 with 12 zeros '1,000,000,000,000' 1ee12 means '1e1,000,000,000,000'
+              Hyper-e Notation: E100#2#3#2 represents E100^E100 which is the first step (E100#2). Then after you get the result you do result^result^result (E100#2#3) and then that result^that result.
+              If you see stuff like (#1^4) it just means #1#1#1#1."></textarea>
+            </div>
+          </div>
+        </div>        
+
+        <div id="rebirthSection">
+            <h3>Rebirth Section</h3>
+            <p>Rebirth Points: <span id="rebirthPoints">0</span></p>
+            <button id="toggleBoardButton" onclick="toggleUpgradeBoard()">Open Upgrade Board</button>
+            <button onclick="rebirth()">Rebirth (req: 1e7.169e16)</button>
+            <div id="upgradeBoard">
+                <div class="upgrade-row">
+                    <h4>Boost 1</h4>
+                    <div class="upgrade-item">
+                        <p>Boost amount: +^5 Gen1</p>
+                        <p id="gen1Boost1Cost">Cost: 1 Rebirth Point</p>
+                        <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen1Boost1')">
+                            <button class="upgrade-button" id="gen1Boost1Button">Buy</button>
+                        </div>
+                        <p id="gen1Boost1Info" class="upgrade-info" style="display: none;"></p>
+                    </div>
+                    <div class="upgrade-item">
+                        <p>Boost amount: +^2 Gen2</p>
+                        <p id="gen2Boost1Cost">Cost: 1 Rebirth Point</p>
+                        <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen2Boost1')">
+                            <button class="upgrade-button" id="gen2Boost1Button">Buy</button>
+                        </div>
+                        <p id="gen2Boost1Info" class="upgrade-info" style="display: none;"></p>
+                    </div>
+                </div>
+                <div class="upgrade-row">
+                    <h4>Boost 2</h4>
+                    <div class="upgrade-item">
+                        <p>Boost amount: +^25 Gen1</p>
+                        <p id="gen1Boost2Cost">Cost: 3 Rebirth Points</p>
+                        <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen1Boost2')">
+                            <button class="upgrade-button" id="gen1Boost2Button">Buy</button>
+                        </div>
+                        <p id="gen1Boost2Info" class="upgrade-info" style="display: none;"></p>
+                    </div>
+                    <div class="upgrade-item">
+                        <p>Boost amount: +^10 Gen2</p>
+                        <p id="gen2Boost2Cost">Cost: 3 Rebirth Points</p>
+                        <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen2Boost2')">
+                            <button class="upgrade-button" id="gen2Boost2Button">Buy</button>
+                        </div>
+                        <p id="gen2Boost2Info" class="upgrade-info" style="display: none;"></p>
+                            <h4>Boost 3</h4>
+                            <div class="upgrade-item">
+                                <p>Boost amount: Gen1^log10(gen1^^1.04)</p>
+                                <p id="gen1Boost3Cost">Cost: 10 Rebirth Points</p>
+                                    <button class="upgrade-button" id="gen1Boost3Button">Buy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="transcendBoard">
+            <button id="transcendButton">Transcend</button>
+            <div id="transcendPoints">Transcend Points: 0</div>
+        
+            <div id="boost1">
+                <h3>Boost 1</h3>
+                <div id="boost1Status">Boost 1: Locked (Requires 1 Transcend Point)</div>
+                <div id="boost1Formula">Formula: points^factorial(log(points^transcend))</div>
+                <div id="boost1Value">Current Boost: 0</div>
+            </div>
+        
+            <div id="boost2">
+                <h3>Boost 2</h3>
+                <div id="boost2Status">Boost 2: Locked (Requires 100 Transcend Points)</div>
+                <div id="boost2Formula">Formula: gen2.prod pow to slog(sqrt(sqrt(sqrt(sqrt(points)))))</div>
+                <div id="boost2Value">Current Boost: 1</div>
+            </div>
+        </div>
+          
+</main>
+</body>
+</html>

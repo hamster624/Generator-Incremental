@@ -1,0 +1,381 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.4s ease, transform 0.3s ease;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #f5a623;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-inline-size: 1200px;
+    padding: 40px;
+    margin-block-start: 20px;
+    background: linear-gradient(135deg, #2a2a2a, #111);
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+/* Generator Card Styles */
+.generator {
+    padding: 20px;
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.9);
+    transition: transform 0.3s ease, box-shadow 0.4s ease;
+    background: radial-gradient(circle, #333, #111);
+}
+
+.generator:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+}
+
+/* Button Styles */
+button {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 14px 24px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #444;
+    transform: scale(1.05);
+}
+
+button:active {
+    background-color: #555;
+    transform: scale(1);
+}
+
+/* Upgrade Styles */
+.upgrade-row {
+    margin-block-end: 20px;
+    padding: 10px;
+}
+
+.upgrade-item {
+    margin-block-end: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #111;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.upgrade-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+}
+
+.upgrade-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background-color: #222;
+    border-radius: 5px;
+    margin: 8px 0;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.upgrade-button-container:hover {
+    background-color: #333;
+}
+
+.upgrade-button {
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.upgrade-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.upgrade-button:active {
+    background-color: #388e3c;
+    transform: scale(1);
+}
+
+.upgrade-info {
+    margin-block-start: 10px;
+    font-size: 14px;
+    color: #777;
+    display: none;
+}
+
+.upgrade-row h4 {
+    margin-block-end: 12px;
+    font-size: 20px;
+    color: #ddd;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+}
+
+.upgrade-item p {
+    font-size: 16px;
+    color: #bbb;
+    margin: 5px 0;
+}
+
+.upgrade-item .cost,
+.upgrade-item .boost {
+    font-size: 14px;
+    color: #999;
+}
+
+/* Stats Overlay */
+#stats-overlay {
+    position: fixed;
+    inset-block-start: 10px;
+    inset-inline-end: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* General Layout */
+header {
+    text-align: center;
+    margin-block-end: 40px;
+}
+
+#subtext {
+    font-size: 18px;
+    color: #bbb;
+    margin-block-start: 10px;
+}
+
+button#toggleNotation, button#toggleGuide {
+    margin-block-start: 20px;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button#toggleNotation:hover, button#toggleGuide:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+button#toggleNotation:active, button#toggleGuide:active {
+    background-color: #003f7f;
+    transform: scale(1);
+}
+
+/* Rebirth and Transcend Sections */
+#rebirthSection, #transcendSection {
+    margin-block-start: 30px;
+    text-align: center;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+#rebirthSection h3, #transcendSection h3 {
+    font-size: 24px;
+    color: #f5a623;
+    margin-block-end: 20px;
+}
+
+#rebirthPoints, #transcendPoints {
+    font-size: 22px;
+    color: #fff;
+}
+
+/* Toggle Notation and Guide Button Styles */
+#toggleTreeButton {
+    padding: 12px;
+    background-color: #007bff;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#toggleTreeButton:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+#toggleTreeButton:active {
+    background-color: #003f7f;
+    transform: scale(1);
+}
+#guide {
+    display: none;
+    background-color: #1c1c1c;
+    padding: 30px;
+    border: 1px solid #333;
+    border-radius: 15px;
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
+    inline-size: 80%;
+    max-inline-size: 900px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+    color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-align: start;
+    backdrop-filter: blur(10px);
+}
+
+#closeGuide {
+    background-color: #e60000;
+    color: white;
+    font-size: 18px;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-end: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#closeGuide:hover {
+    background-color: #d10000;
+    transform: scale(1.05);
+}
+
+#closeGuide:active {
+    background-color: #a50000;
+    transform: scale(1);
+}
+
+.guide-section {
+    margin-block-end: 25px;
+    border-block-end: 1px solid #444;
+    padding-block-end: 15px;
+}
+
+.guide-section h3 {
+    font-size: 1.8rem;
+    cursor: pointer;
+    margin-block-end: 10px;
+    background: linear-gradient(135deg, #f5a623, #d48800);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.guide-section h3:hover {
+    background: linear-gradient(135deg, #f9b400, #e07b00);
+    transform: scale(1.05);
+}
+
+.guide-section h3:active {
+    background: linear-gradient(135deg, #e07b00, #c75d00);
+    transform: scale(1);
+}
+
+.guide-section-content {
+    display: none;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 8px;
+    color: #bbb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    transition: all 0.3s ease;
+}
+
+textarea {
+    inline-size: calc(100% - 20px);
+    padding: 15px;
+    font-size: 1.1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    margin-block-start: 10px;
+    resize: vertical;
+    background-color: #333;
+    color: #e0e0e0;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+textarea::placeholder {
+    color: #777;
+}
+
+textarea:focus {
+    outline: none;
+    background-color: #444;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+#guide-container {
+    margin-block-start: 25px;
+}
+
+button#toggleGuide {
+    background-color: #f5a623;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+    color: #fff;
+}
+
+button#toggleGuide:hover {
+    background-color: #d48800;
+    transform: scale(1.05);
+}
+
+button#toggleGuide:active {
+    background-color: #c75d00;
+    transform: scale(1);
+}
