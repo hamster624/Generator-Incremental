@@ -158,27 +158,6 @@ let food = {x: 10, y: 10};
 let boardSize = 20;
 
 function startSnake() {
-    const gameArea = document.getElementById("gameArea");
-
-    if (isGameRunning) {
-        gameArea.innerHTML = '';
-        isGameRunning = false;
-        return;
-    }
-
-    gameArea.innerHTML = `
-        <h3>Snake Game</h3>
-        <p>Do you want to start?</p>
-        <button onclick="startGame()">Yes, Start!</button>
-        <button onclick="closeGame()">No, Close</button>
-    `;
-}
-
-function closeGame() {
-    document.getElementById("gameArea").innerHTML = '';
-}
-
-function startGame() {
     isGameRunning = true;
     snake = [{x: 5, y: 5}];
     direction = {x: 1, y: 0};
@@ -203,7 +182,7 @@ function startGame() {
         updateSnakeGame(gameBoard);
     }, 200);
 
-    addMobileControls(gameBoard);
+    addMobileControls();
 }
 
 function updateSnakeGame(board) {
@@ -211,12 +190,11 @@ function updateSnakeGame(board) {
 
     if (head.x < 0 || head.x >= boardSize || head.y < 0 || head.y >= boardSize || isSnakeCollision(head)) {
         clearInterval(gameInterval);
-        alert("Game Over! You hit the wall or yourself.");
         isGameRunning = false;
         document.getElementById("gameArea").innerHTML = `
             <h3>Snake Game</h3>
             <p>Game Over! Do you want to play again?</p>
-            <button onclick="startGame()">Yes, Play Again</button>
+            <button onclick="startSnake()">Yes, Play Again</button>
             <button onclick="closeGame()">No, Close</button>
         `;
         return;
@@ -256,71 +234,57 @@ function isSnakeCollision(head) {
     return snake.some((segment, index) => index !== 0 && segment.x === head.x && segment.y === head.y);
 }
 
-window.addEventListener('keydown', (event) => {
-    if (!isGameRunning) return;
+function closeGame() {
+    document.getElementById("gameArea").innerHTML = '';
+}
 
-    if (event.key === 'w' || event.key === 'ArrowUp') {
-        if (direction.y === 0) {
-            direction = {x: 0, y: -1};
-        }
-    } else if (event.key === 's' || event.key === 'ArrowDown') {
-        if (direction.y === 0) {
-            direction = {x: 0, y: 1};
-        }
-    } else if (event.key === 'a' || event.key === 'ArrowLeft') {
-        if (direction.x === 0) {
-            direction = {x: -1, y: 0};
-        }
-    } else if (event.key === 'd' || event.key === 'ArrowRight') {
-        if (direction.x === 0) {
-            direction = {x: 1, y: 0};
-        }
-    }
-});
-
-function addMobileControls(board) {
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.style.position = 'absolute';
-    buttonsContainer.style.bottom = '10px';
-    buttonsContainer.style.left = '50%';
-    buttonsContainer.style.transform = 'translateX(-50%)';
-    buttonsContainer.style.display = 'flex';
+function addMobileControls() {
+    const controlsContainer = document.createElement('div');
+    controlsContainer.style.position = 'absolute';
+    controlsContainer.style.bottom = '10px';
+    controlsContainer.style.left = '50%';
+    controlsContainer.style.transform = 'translateX(-50%)';
+    controlsContainer.style.display = 'flex';
 
     const directions = ['Up', 'Down', 'Left', 'Right'];
 
-    directions.forEach((direction) => {
+    directions.forEach((directionLabel) => {
         const button = document.createElement('button');
-        button.textContent = direction;
+        button.textContent = directionLabel;
         button.style.margin = '5px';
         button.style.padding = '10px';
 
         button.addEventListener('click', () => {
-            switch (direction) {
-                case 'Up':
-                    if (direction.y === 0) {
-                        direction = {x: 0, y: -1};
-                    }
-                    break;
-                case 'Down':
-                    if (direction.y === 0) {
-                        direction = {x: 0, y: 1};
-                    }
-                    break;
-                case 'Left':
-                    if (direction.x === 0) {
-                        direction = {x: -1, y: 0};
-                    }
-                    break;
-                case 'Right':
-                    if (direction.x === 0) {
-                        direction = {x: 1, y: 0};
-                    }
-                    break;
+            if (!isGameRunning) return;
+
+            // Correctly update direction based on button press
+            if (directionLabel === 'Up' && direction.y === 0) {
+                direction = {x: 0, y: -1};
+            } else if (directionLabel === 'Down' && direction.y === 0) {
+                direction = {x: 0, y: 1};
+            } else if (directionLabel === 'Left' && direction.x === 0) {
+                direction = {x: -1, y: 0};
+            } else if (directionLabel === 'Right' && direction.x === 0) {
+                direction = {x: 1, y: 0};
             }
         });
 
-        buttonsContainer.appendChild(button);
+        controlsContainer.appendChild(button);
     });
 
-    board.appendChild(buttonsContainer);
+    document.getElementById('gameArea').appendChild(controlsContainer);
 }
+
+window.addEventListener('keydown', (event) => {
+    if (!isGameRunning) return;
+
+    if (event.key === 'w' || event.key === 'ArrowUp') {
+        if (direction.y === 0) direction = {x: 0, y: -1};
+    } else if (event.key === 's' || event.key === 'ArrowDown') {
+        if (direction.y === 0) direction = {x: 0, y: 1};
+    } else if (event.key === 'a' || event.key === 'ArrowLeft') {
+        if (direction.x === 0) direction = {x: -1, y: 0};
+    } else if (event.key === 'd' || event.key === 'ArrowRight') {
+        if (direction.x === 0) direction = {x: 1, y: 0};
+    }
+});
