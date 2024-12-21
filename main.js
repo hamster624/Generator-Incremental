@@ -126,7 +126,7 @@ function notateAlt(expnum, fp) {
     } else if (exp.slog().gt(3.4)) {
         return "10^^" + exp.slog(10).toFixed(fp);
     } else if (exp.slog(10).lt(1e15)) {
-        return "1e" + exp.log10().toFixed(fp);
+        return "e" + exp.log10().toFixed(fp);
     } else {
         let str = exp.toHyperE();
         str = str.replace(/#0/g, '');
