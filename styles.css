@@ -1,4 +1,3 @@
-/* Global Styles */
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #121212;
@@ -73,7 +72,6 @@ button:active {
     transform: scale(1);
 }
 
-/* Upgrade Styles */
 .upgrade-row {
     margin-block-end: 20px;
     padding: 10px;
@@ -156,7 +154,6 @@ button:active {
     color: #999;
 }
 
-/* Stats Overlay */
 #stats-overlay {
     position: fixed;
     inset-block-start: 10px;
@@ -172,7 +169,6 @@ button:active {
     letter-spacing: 1px;
 }
 
-/* General Layout */
 header {
     text-align: center;
     margin-block-end: 40px;
@@ -205,7 +201,6 @@ button#toggleNotation:active, button#toggleGuide:active {
     transform: scale(1);
 }
 
-/* Rebirth and Transcend Sections */
 #rebirthSection, #transcendSection {
     margin-block-start: 30px;
     text-align: center;
@@ -226,7 +221,6 @@ button#toggleNotation:active, button#toggleGuide:active {
     color: #fff;
 }
 
-/* Toggle Notation and Guide Button Styles */
 #toggleTreeButton {
     padding: 12px;
     background-color: #007bff;
@@ -378,4 +372,145 @@ button#toggleGuide:hover {
 button#toggleGuide:active {
     background-color: #c75d00;
     transform: scale(1);
+}
+#puzzle {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    margin-block-start: 20px;
+}
+
+#menu {
+    margin-block-start: 50px;
+}
+
+.game-button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.game-button:hover {
+    background-color: #45a049;
+}
+
+#game-container {
+    margin-block-start: 20px;
+    text-align: center;
+}
+
+#clicker-game {
+    font-size: 24px;
+}
+
+#puzzle-container {
+    margin-block-start: 20px;
+}
+
+.puzzle-tile {
+    inline-size: 100px;
+    block-size: 100px;
+    display: inline-block;
+    background-color: lightgray;
+    text-align: center;
+    line-height: 100px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#snake-container {
+    margin-block-start: 20px;
+    position: relative;
+    inline-size: 300px;
+    block-size: 300px;
+    border: 2px solid black;
+    margin: 0 auto;
+}
+
+#puzzle-row {
+    margin-block-start: 20px;
+    font-size: 20px;
+    font-family: monospace;
+}
+#menu {
+    text-align: center;
+    margin-block-start: 50px;
+}
+
+button {
+    margin: 10px;
+    padding: 15px 25px;
+    font-size: 16px;
+}
+
+#gameArea {
+    margin-block-start: 30px;
+    text-align: center;
+}
+
+.memory-game {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+.memory-card {
+    inline-size: 100px;
+    block-size: 100px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.memory-card.flipped {
+    background-color: #fff;
+}
+
+.memory-card.matched {
+    background-color: #a0e8a0;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
+#openMenuButton {
+    position: fixed;
+    inset-block-start: 200px;
+    inset-inline-start: 10px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #000000;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+
+#menu {
+    position: absolute;
+    inset-block-start: 450px;
+    inset-inline-start: 20px;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    display: none;
+}
+
+#menu button {
+    margin-block-end: 10px;
+    padding: 10px;
+    font-size: 14px;
 }
