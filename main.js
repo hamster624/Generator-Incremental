@@ -57,7 +57,6 @@ function update() {
             gen.prod = gen.prod.pow(boostFactor);
         }
 
-        // Apply transcend boosts here
         applyTranscendBoosts();
 
         if (i === 0) {
@@ -68,8 +67,23 @@ function update() {
     }
 }
 
+function render() {
+    const notationFunc = useAltNotation ? notateAlt : notate;
+    document.getElementById('points').innerText = notationFunc(points, 5);
+    
+    generators.forEach((gen, i) => {
+        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(gen.prod, 2);
+        document.getElementById(`gen${i + 1}count`).innerText = notationFunc(gen.count, 2);
+        document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 5);
+    });
+    if (upgrades.gen1Boost3.eq(1)) {
+        document.getElementById('gen1Boost3Button').disabled = true;
+        document.getElementById('gen1Boost3Button').innerText = "Buy";
+    }
+}
+
 function formatNumberWithCommas(num) {
-    return num.toLocaleString();
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 function notate(expnum, fp) {
@@ -94,22 +108,6 @@ function notate(expnum, fp) {
             return `(#1^${repeatCount})`;
         });
         return str;
-    }
-}
-
-
-function render() {
-    const notationFunc = useAltNotation ? notateAlt : notate;
-    document.getElementById('points').innerText = notationFunc(points, 5);
-    
-    generators.forEach((gen, i) => {
-        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(gen.prod, 2);
-        document.getElementById(`gen${i + 1}count`).innerText = notationFunc(gen.count, 2);
-        document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 5);
-    });
-    if (upgrades.gen1Boost3.eq(1)) {
-        document.getElementById('gen1Boost3Button').disabled = true;
-        document.getElementById('gen1Boost3Button').innerText = "Buy";
     }
 }
 
