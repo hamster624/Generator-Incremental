@@ -83,6 +83,9 @@ function render() {
 }
 
 function formatNumberWithCommas(num) {
+    if (num > 1e15) {
+        return num.toString();
+    }
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
