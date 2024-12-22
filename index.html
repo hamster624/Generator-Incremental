@@ -94,13 +94,13 @@
         <button onclick="resetGame()">Reset Game</button>
         <button onclick="toggleNotation()">Toggle Notation</button>
         <button onclick="toggleGuide()">Open Guide</button>
-        <button id="openMenuButton">Open Mini-Games Menu</button>
+        <button id="openMenuButton">MiniGames</button>
 
         <div id="menu" style="display: none; position: fixed; inset-block-start: 0; inset-inline-start: 0; padding: 10px; background-color: rgba(7, 2, 2, 0.7); color: white; font-size: 14px; z-index: 1000;">
-            <h1>Mini-Games Menu</h1>
-            <button onclick="startSnake()">Start Snake Game</button>
-            <button onclick="startMemoryGame()">Start Memory Game</button>
-            <button onclick="startClicker()">Start Clicker Game</button>
+            <h1>MiniGames</h1>
+            <button onclick="startSnake()">Snake Game</button>
+            <button onclick="startMemoryGame()">Memory Game</button>
+            <button onclick="startClicker()">Clicker Game</button>
             
             <div id="gameArea"></div>
         </div>
@@ -135,11 +135,19 @@
           </div>
         </div>        
 
-        <div id="rebirthSection">
+        <button id="rebirthButton" style="position: fixed; inset-block-start: 40%; inset-inline-start: 10px; background: black; color: white; border: 1px solid white;">Rebirth</button>
+        <button id="transcendButton" style="position: fixed; inset-block-start: 50%; inset-inline-start: 10px; background: black; color: white; border: 1px solid white;">Transcend</button>
+
+        <div id="rebirthSection" style="position: fixed; inset-block-start: 50px; inset-inline-start: 150px; background: rgba(0, 0, 0, 0.7); color: white; padding: 10px; border: 1px solid white; display: none;">
             <h3>Rebirth Section</h3>
             <p>Rebirth Points: <span id="rebirthPoints">0</span></p>
             <button id="toggleBoardButton" onclick="toggleUpgradeBoard()">Open Upgrade Board</button>
-            <button onclick="rebirth()">Rebirth (req: 1e7.169e16)</button>
+            <div class="rebirth-button-container">
+                <button onclick="rebirth()" id="rebirthBuy" class="rebirth-button" enabled>
+                    Rebirth (req: 1e7.169e16)
+                </button>
+                <div id="rebirthButtonLockOverlay" class="locked-overlay">Locked</div>
+            </div>
             <div id="upgradeBoard">
                 <div class="upgrade-row">
                     <h4>Boost 1</h4>
@@ -147,7 +155,7 @@
                         <p>Boost amount: +^5 Gen1</p>
                         <p id="gen1Boost1Cost">Cost: 1 Rebirth Point</p>
                         <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen1Boost1')">
-                            <button class="upgrade-button" id="gen1Boost1Button">Buy</button>
+                            <button class="upgrade-button" id="gen1Boost1Button" disabled>Buy</button>
                         </div>
                         <p id="gen1Boost1Info" class="upgrade-info" style="display: none;"></p>
                     </div>
@@ -155,7 +163,7 @@
                         <p>Boost amount: +^2 Gen2</p>
                         <p id="gen2Boost1Cost">Cost: 1 Rebirth Point</p>
                         <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen2Boost1')">
-                            <button class="upgrade-button" id="gen2Boost1Button">Buy</button>
+                            <button class="upgrade-button" id="gen2Boost1Button" disabled>Buy</button>
                         </div>
                         <p id="gen2Boost1Info" class="upgrade-info" style="display: none;"></p>
                     </div>
@@ -166,7 +174,7 @@
                         <p>Boost amount: +^25 Gen1</p>
                         <p id="gen1Boost2Cost">Cost: 3 Rebirth Points</p>
                         <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen1Boost2')">
-                            <button class="upgrade-button" id="gen1Boost2Button">Buy</button>
+                            <button class="upgrade-button" id="gen1Boost2Button" disabled>Buy</button>
                         </div>
                         <p id="gen1Boost2Info" class="upgrade-info" style="display: none;"></p>
                     </div>
@@ -174,40 +182,64 @@
                         <p>Boost amount: +^10 Gen2</p>
                         <p id="gen2Boost2Cost">Cost: 3 Rebirth Points</p>
                         <div class="upgrade-button-container" onclick="toggleUpgradeInfo('gen2Boost2')">
-                            <button class="upgrade-button" id="gen2Boost2Button">Buy</button>
+                            <button class="upgrade-button" id="gen2Boost2Button" disabled>Buy</button>
                         </div>
                         <p id="gen2Boost2Info" class="upgrade-info" style="display: none;"></p>
-                            <h4>Boost 3</h4>
-                            <div class="upgrade-item">
-                                <p>Boost amount: Gen1^log10(gen1^^1.04)</p>
-                                <p id="gen1Boost3Cost">Cost: 10 Rebirth Points</p>
-                                    <button class="upgrade-button" id="gen1Boost3Button">Buy</button>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div class="upgrade-row">
+                    <h4>Boost 3</h4>
+                    <div class="upgrade-item">
+                        <p>Boost amount: Gen1^log10(gen1^^1.04)</p>
+                        <p id="gen1Boost3Cost">Cost: 10 Rebirth Points</p>
+                        <button class="upgrade-button" id="gen1Boost3Button" disabled>Buy</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="transcendBoard">
-            <button id="transcendButton">Transcend</button>
-            <div id="transcendPoints">Transcend Points: 0</div>
         
+            </div>
+        </div>
+
+        <div id="transcendSection" style="position: fixed; inset-block-start: 40%; inset-inline-start: 150px; background: rgba(0, 0, 0, 0.7); color: white; padding: 10px; border: 1px solid white; display: none;">
+            <h3>Transcend Section</h3>
+            <p>Transcend Points: <span id="transcendPoints">0</span></p>
+            <button onclick="transcend()">Transcend (req: 1ee120)</button>
+            <div id="transcendButtonLockOverlay" class="locked-overlay">Locked</div>
             <div id="boost1">
-                <h3>Boost 1</h3>
+                <h4>Boost 1</h4>
                 <div id="boost1Status">Boost 1: Locked (Requires 1 Transcend Point)</div>
                 <div id="boost1Formula">Formula: boost gen1 prod by ^points^factorial(log(points^transcend))</div>
                 <div id="boost1Value">Current Boost: 0</div>
             </div>
-        
             <div id="boost2">
-                <h3>Boost 2</h3>
+                <h4>Boost 2</h4>
                 <div id="boost2Status">Boost 2: Locked (Requires 100 Transcend Points)</div>
                 <div id="boost2Formula">Formula: gen2.prod pow to slog(sqrt(sqrt(sqrt(sqrt(points)))))</div>
                 <div id="boost2Value">Current Boost: 1</div>
             </div>
         </div>
-          
-</main>
+        
+    </main>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const transcendButton = document.getElementById('transcendButton');
+    const transcendSection = document.getElementById('transcendSection');
+    
+    transcendSection.style.display = 'none';
+    
+    transcendButton.onclick = function() {
+        transcendSection.style.display = transcendSection.style.display === 'none' ? 'block' : 'none';
+    };
+    
+    const rebirthButton = document.getElementById('rebirthButton');
+    const rebirthSection = document.getElementById('rebirthSection');
+    
+    rebirthButton.onclick = function() {
+        rebirthSection.style.display = rebirthSection.style.display === 'none' ? 'block' : 'none';
+    };
+});
+    </script>
 </body>
 </html>
