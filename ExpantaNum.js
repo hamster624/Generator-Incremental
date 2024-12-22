@@ -1,4 +1,4 @@
-
+// This is a modified version by hamster624
 !function(r) {
     "use strict";
     var e = {
@@ -1569,4 +1569,3 @@
     }) : "undefined" != typeof module && module.exports ? module.exports = e : (r || (r = "undefined" != typeof self && self && self.self == self ? self : Function("return this")()),
     r.ExpantaNum = e)
   }(this);
-  
