@@ -1,5 +1,6 @@
 let rebirthPoints = ExpantaNum(0);
 let transcendPoints = ExpantaNum(0);
+let hasRebirthed = false;
 
 let upgrades = {
     gen1Boost1: ExpantaNum(0),
@@ -28,12 +29,33 @@ function rebirth() {
             gen.count = index === 0 ? ExpantaNum(1) : ExpantaNum(0);
             gen.prod = ExpantaNum(0);
             gen.cost = initialGeneratorCosts[index];
+            hasRebirthed = true;
         });
         applyUpgrades();
         renderRebirth();
+        saveGame();
     }
 }
+function updateRebirthSection() {
+    const rebirthButton = document.getElementById("rebirthButton");
+    const lockOverlay = document.getElementById("rebirthButtonLockOverlay");
+    if (points.gte(rebirthThreshold)) {
+        lockOverlay.style.display = 'none';
+        rebirthButton.innerText = "Rebirth";
+        rebirthButton.style.backgroundColor = "#5cb85c";
+        rebirthButton.disabled = false;
+    } else {
+        lockOverlay.style.display = 'flex';
+        rebirthButton.innerText = "Locked (req: 1e7.169e16)";
+        rebirthButton.style.backgroundColor = "#333";
+        rebirthButton.disabled = true;
+    }
 
+    document.querySelectorAll(".upgrade-button").forEach(button => {
+        button.disabled = !hasRebirthed;
+        button.style.backgroundColor = hasRebirthed ? "#5cb85c" : "#333";
+    });
+}
 function toggleUpgradeInfo(upgrade) {
     const infoElement = document.getElementById(`${upgrade}Info`);
     const isInfoVisible = infoElement.style.display === 'block';
@@ -292,4 +314,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (transcendButton) {
         transcendButton.onclick = transcend;
     }
+});
+function updateTranscendSection() {
+    const transcendButton = document.getElementById("transcendButton");
+    const lockOverlay = document.getElementById("transcendButtonLockOverlay");
+    
+    if (points.gte(ExpantaNum("1ee120"))) {
+        lockOverlay.style.display = 'none';
+        transcendButton.innerText = "Transcend";
+        transcendButton.style.backgroundColor = "#5cb85c";
+        transcendButton.disabled = false;
+    } else {
+        lockOverlay.style.display = 'flex';
+        transcendButton.innerText = "Locked (req: 1ee120)";
+        transcendButton.style.backgroundColor = "#333";
+        transcendButton.disabled = true;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateTranscendSection();
 });
