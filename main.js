@@ -224,6 +224,10 @@ function saveGame() {
             flippedCards: memoryGameState.flippedCards,
             matchedPairs: memoryGameState.matchedPairs,
             totalPairs: memoryGameState.totalPairs
+        },
+        unlockedResets: {
+            rebirthUnlocked: hasRebirthed,
+            transcendUnlocked: transcendPoints.gte(ExpantaNum("1ee120"))
         }
     };
 
@@ -296,6 +300,14 @@ function loadGame() {
             transcendBaseCost = ExpantaNum(saveData.transcendBaseCost || "1ee120");
             transcendCostMultiplier = ExpantaNum(saveData.transcendCostMultiplier || 1.5);
 
+            // Load unlocked reset states
+            if (saveData.unlockedResets) {
+                hasRebirthed = saveData.unlockedResets.rebirthUnlocked;
+                if (transcendPoints.gte(ExpantaNum("1ee120"))) {
+                    transcendBoosts.boost1 = true;
+                }
+            }
+
             applyUpgrades();
             renderRebirth();
             renderTranscend();
@@ -353,6 +365,7 @@ function resetGame() {
             gen1Boost3: ExpantaNum(0),
         };
         hasRebirthed = false;
+        hasTranscended = false;
         transcendPoints = ExpantaNum(0);
         transcendBoosts = {
             boost1: false,
