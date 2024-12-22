@@ -152,16 +152,16 @@ function loadMemoryGameStateFromSaveGame(saveData) {
 
 let isGameRunning = false;
 let gameInterval;
-let snake = [{x: 5, y: 5}];
+let snake = [{x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5}];  // Start with 3 segments
 let direction = {x: 1, y: 0};
 let food = {x: 10, y: 10};
 let boardSize = 20;
 
 function startSnake() {
     isGameRunning = true;
-    snake = [{x: 5, y: 5}];
+    snake = [{x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5}];  // Start with 3 segments
     direction = {x: 1, y: 0};
-    food = {x: Math.floor(Math.random() * boardSize), y: Math.floor(Math.random() * boardSize)};
+    food = generateFood();
 
     document.getElementById("gameArea").innerHTML = `
         <h3>Snake Game</h3>
@@ -185,6 +185,18 @@ function startSnake() {
     addMobileControls();
 }
 
+function generateFood() {
+    let newFood;
+    do {
+        newFood = {x: Math.floor(Math.random() * boardSize), y: Math.floor(Math.random() * boardSize)};
+    } while (isFoodOnSnake(newFood));
+    return newFood;
+}
+
+function isFoodOnSnake(food) {
+    return snake.some(segment => segment.x === food.x && segment.y === food.y);
+}
+
 function updateSnakeGame(board) {
     const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
 
@@ -203,18 +215,19 @@ function updateSnakeGame(board) {
     snake.unshift(head);
 
     if (head.x === food.x && head.y === food.y) {
-        food = {x: Math.floor(Math.random() * boardSize), y: Math.floor(Math.random() * boardSize)};
+        food = generateFood();
     } else {
         snake.pop();
     }
 
     board.innerHTML = '';
-    snake.forEach(segment => {
+    snake.forEach((segment, index) => {
         const segmentElement = document.createElement('div');
         segmentElement.style.position = 'absolute';
         segmentElement.style.width = '20px';
         segmentElement.style.height = '20px';
-        segmentElement.style.backgroundColor = 'green';
+        segmentElement.style.backgroundColor = index === 0 ? 'darkgreen' : 'green';  // Head is darker
+        segmentElement.style.borderRadius = '50%';  // Make the snake round
         segmentElement.style.left = `${segment.x * 20}px`;
         segmentElement.style.top = `${segment.y * 20}px`;
         board.appendChild(segmentElement);
@@ -246,7 +259,7 @@ function addMobileControls() {
     controlsContainer.style.transform = 'translateX(-50%)';
     controlsContainer.style.display = 'flex';
 
-    const directions = ['Up', 'Down', 'Left', 'Right'];
+    const directions = ['↑', '↓', '←', '→'];
 
     directions.forEach((directionLabel) => {
         const button = document.createElement('button');
@@ -256,15 +269,13 @@ function addMobileControls() {
 
         button.addEventListener('click', () => {
             if (!isGameRunning) return;
-
-            // Correctly update direction based on button press
-            if (directionLabel === 'Up' && direction.y === 0) {
+            if (directionLabel === '↑' && direction.y === 0) {
                 direction = {x: 0, y: -1};
-            } else if (directionLabel === 'Down' && direction.y === 0) {
+            } else if (directionLabel === '↓' && direction.y === 0) {
                 direction = {x: 0, y: 1};
-            } else if (directionLabel === 'Left' && direction.x === 0) {
+            } else if (directionLabel === '←' && direction.x === 0) {
                 direction = {x: -1, y: 0};
-            } else if (directionLabel === 'Right' && direction.x === 0) {
+            } else if (directionLabel === '→' && direction.x === 0) {
                 direction = {x: 1, y: 0};
             }
         });
@@ -274,7 +285,6 @@ function addMobileControls() {
 
     document.getElementById('gameArea').appendChild(controlsContainer);
 }
-
 window.addEventListener('keydown', (event) => {
     if (!isGameRunning) return;
 
