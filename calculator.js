@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
     repeatLastOperation();
   const calculatorButtonHTML = `
       <button onclick="openCalculator()" style="position: fixed; inset-block-start: 10px; inset-inline-start: 10px; background: black; color: white; border: 1px solid white; padding: 10px; z-index: 1000;">
-          Open Calculator
+          Calculator
       </button>
   `;
   document.body.insertAdjacentHTML("beforeend", calculatorButtonHTML);
