@@ -83,7 +83,7 @@ function render() {
 }
 
 function formatNumberWithCommas(num) {
-    if (num > 1e15) {
+    if (num > 1e12) {
         return num.toString();
     }
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -97,7 +97,7 @@ function notate(expnum, fp) {
     if (exp.lt("1e12")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1000000000000000) && exp.slog(10).gte(1.5)) {
-        return formatNumberWithCommas(exp.toExponential(fp));
+        return exp.toExponential(fp);  // Directly use toExponential to avoid unintended breaks in the number
     } else if (exp.lt("10^^1000000000000000")) {
         return "10^^" + notate(exp.slog(10), fp);
     } else {
@@ -122,7 +122,7 @@ function notateAlt(expnum, fp) {
     if (exp.lt("1e9")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1.5)) {
-        return formatNumberWithCommas(exp.toExponential(fp));
+        return exp.toExponential(fp);  // Directly use toExponential
     } else if (exp.slog().gt(3.4)) {
         return "10^^" + exp.slog(10).toFixed(fp);
     } else if (exp.slog(10).lt(1e15)) {
@@ -203,6 +203,7 @@ function saveGame() {
             upgrades: (gen.upgrades || []).map(upgrade => upgrade.level.toString())
         })),
         rebirthPoints: rebirthPoints.toString(),
+        hasRebirthed: hasRebirthed,
         upgrades: Object.fromEntries(
             Object.entries(upgrades).map(([key, value]) => [key, value.toString()])
         ),
@@ -211,6 +212,9 @@ function saveGame() {
             boost1: transcendBoosts.boost1,
             boost2: transcendBoosts.boost2
         },
+        transcendCount: transcendCount.toString(),
+        transcendBaseCost: transcendBaseCost.toString(),
+        transcendCostMultiplier: transcendCostMultiplier.toString(),
         playtime: playtime.toString(),
         memoryGame: {
             cards: memoryGameState.cards.map(card => ({
@@ -275,6 +279,7 @@ function loadGame() {
             });
 
             rebirthPoints = ExpantaNum(saveData.rebirthPoints);
+            hasRebirthed = saveData.hasRebirthed;
             Object.entries(saveData.upgrades).forEach(([key, value]) => {
                 upgrades[key] = ExpantaNum(value);
             });
@@ -287,12 +292,13 @@ function loadGame() {
                 transcendPoints = ExpantaNum(0);
             }
 
-            transcendCount = saveData.transcendCount || 0;
+            transcendCount = ExpantaNum(saveData.transcendCount || 0);
             transcendBaseCost = ExpantaNum(saveData.transcendBaseCost || "1ee120");
             transcendCostMultiplier = ExpantaNum(saveData.transcendCostMultiplier || 1.5);
 
             applyUpgrades();
             renderRebirth();
+            renderTranscend();
 
             playtime = Number(saveData.playtime);
             if (isNaN(playtime)) {
@@ -311,11 +317,13 @@ function loadGame() {
             }
 
             updateStatsOverlay();
+            updateRebirthSection();
         } catch (error) {
             console.error("Failed to load game save:", error);
         }
     }
 }
+
 const initialGeneratorCosts = generators.map(gen => gen.cost);
 
 function resetGame() {
@@ -336,12 +344,15 @@ function resetGame() {
             gen2Boost2: ExpantaNum(0),
             gen1Boost3: ExpantaNum(0),
         };
-
+        hasRebirthed = false;
         transcendPoints = ExpantaNum(0);
         transcendBoosts = {
             boost1: false,
             boost2: false
         };
+        transcendCount = 0;
+        transcendBaseCost = ExpantaNum("1ee120");
+        transcendCostMultiplier = ExpantaNum(1.5);
         clickerScore = 0;
         playtime = 0;
         lastUpdateTime = performance.now();
@@ -350,6 +361,7 @@ function resetGame() {
         renderTranscend();
     }
 }
+
 
 function showDeviceModal() {
     const modal = document.createElement('div');
@@ -433,6 +445,8 @@ setInterval(() => {
     render();
     renderRebirth();
     renderTranscend();
+    updateRebirthSection();
+    updateTranscendSection();
 }, 100);
 
 loadGame();
