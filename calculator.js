@@ -1,3 +1,4 @@
+// This calculator is made by me if you want to check it out here is the link:https://hamster624.github.io/Calculator/
 document.addEventListener('DOMContentLoaded', function() {
   const calculatorHTML = `
       <div id="calculator" style="display: none; position: fixed; inset-block-start: 20%; inset-inline-start: 20%; inline-size: 400px; background: black; color: white; border: 1px solid white; padding: 20px; z-index: 1000; max-block-size: 80vh; overflow-y: auto;">
