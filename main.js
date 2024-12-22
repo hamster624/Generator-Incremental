@@ -328,6 +328,14 @@ const initialGeneratorCosts = generators.map(gen => gen.cost);
 
 function resetGame() {
     if (confirm("Are you sure you want to reset your progress?")) {
+        const rebirthSection = document.getElementById("rebirthSection");
+        const transcendSection = document.getElementById("transcendSection");
+        if (rebirthSection) {
+            rebirthSection.style.display = "none";
+        }
+        if (transcendSection) {
+            transcendSection.style.display = "none";
+        }
         localStorage.removeItem('gameSave');
         points = ExpantaNum(0);
         generators.forEach((gen, index) => {
@@ -361,8 +369,6 @@ function resetGame() {
         renderTranscend();
     }
 }
-
-
 function showDeviceModal() {
     const modal = document.createElement('div');
     modal.classList.add('grayscale');
