@@ -1,6 +1,7 @@
 let rebirthPoints = ExpantaNum(0);
 let transcendPoints = ExpantaNum(0);
 let hasRebirthed = false;
+let hasTranscended = false;
 
 let upgrades = {
     gen1Boost1: ExpantaNum(0),
@@ -17,7 +18,7 @@ function calculateRebirthPoints() {
 }
 
 function rebirth() {
-    if (points.lt(rebirthThreshold)) {
+    if (points.lt(rebirthThreshold) && !hasRebirthed) {
         return;
     }
 
@@ -39,7 +40,7 @@ function rebirth() {
 function updateRebirthSection() {
     const rebirthButton = document.getElementById("rebirthButton");
     const lockOverlay = document.getElementById("rebirthButtonLockOverlay");
-    if (points.gte(rebirthThreshold)) {
+    if (points.gte(rebirthThreshold) || hasRebirthed) {
         lockOverlay.style.display = 'none';
         rebirthButton.innerText = "Rebirth";
         rebirthButton.style.backgroundColor = "#5cb85c";
@@ -56,6 +57,7 @@ function updateRebirthSection() {
         button.style.backgroundColor = hasRebirthed ? "#5cb85c" : "#333";
     });
 }
+
 function toggleUpgradeInfo(upgrade) {
     const infoElement = document.getElementById(`${upgrade}Info`);
     const isInfoVisible = infoElement.style.display === 'block';
@@ -115,27 +117,6 @@ function buyUpgrade(key, upgradeCost) {
                 infoElement.style.display = 'none';
             }
         }
-    }
-}
-
-function saveRebirthData() {
-    const saveData = {
-        rebirthPoints: rebirthPoints.toString(),
-        upgrades: Object.fromEntries(
-            Object.entries(upgrades).map(([key, value]) => [key, value.toString()])
-        ),
-    };
-    localStorage.setItem('rebirthData', JSON.stringify(saveData));
-}
-
-function loadRebirthData() {
-    const saveData = JSON.parse(localStorage.getItem('rebirthData'));
-    if (saveData) {
-        rebirthPoints = ExpantaNum(saveData.rebirthPoints);
-        Object.entries(saveData.upgrades).forEach(([key, value]) => {
-            upgrades[key] = ExpantaNum(value);
-        });
-        applyUpgrades();
     }
 }
 
@@ -237,7 +218,9 @@ function applyTranscendBoosts() {
 
 function transcend() {
     const transcendThreshold = ExpantaNum("1ee120");
-    if (points.lt(transcendThreshold)) return;
+    if (points.lt(transcendThreshold) && !hasTranscended) {
+        return;
+    }
 
     const gainedPoints = points.slog().sqrt();
     if (gainedPoints.gt(0)) {
@@ -258,10 +241,10 @@ function transcend() {
         unlockTranscendBoost1();
         unlockTranscendBoost2();
         applyTranscendBoosts();
+        hasTranscended = true;
         renderTranscend();
     }
 }
-
 function renderTranscend() {
     const transcendPointsElement = document.getElementById('transcendPoints');
     const boost1StatusElement = document.getElementById('boost1Status');
@@ -318,8 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateTranscendSection() {
     const transcendButton = document.getElementById("transcendButton");
     const lockOverlay = document.getElementById("transcendButtonLockOverlay");
-    
-    if (points.gte(ExpantaNum("1ee120"))) {
+
+    if (points.gte(ExpantaNum("1ee120")) || hasTranscended) {
         lockOverlay.style.display = 'none';
         transcendButton.innerText = "Transcend";
         transcendButton.style.backgroundColor = "#5cb85c";
