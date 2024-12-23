@@ -40,7 +40,7 @@ function rebirth() {
 function updateRebirthSection() {
     const rebirthButton = document.getElementById("rebirthButton");
     const lockOverlay = document.getElementById("rebirthButtonLockOverlay");
-    if (points.gte(rebirthThreshold) || hasRebirthed) {
+    if (points.gte(rebirthThreshold) || hasRebirthed || hasTranscended) {
         lockOverlay.style.display = 'none';
         rebirthButton.innerText = "Rebirth";
         rebirthButton.style.backgroundColor = "#5cb85c";
@@ -189,7 +189,7 @@ function getBoost1Value() {
 
 function getBoost2Value() {
     if (!transcendBoosts.boost2) return ExpantaNum(1);
-    return ExpantaNum(points.sqrt().sqrt().sqrt().slog().max(1));
+    return ExpantaNum(points.log10().pow(transcend));
 }
 
 function unlockTranscendBoost1() {
@@ -272,11 +272,11 @@ function renderTranscend() {
     }
 
     if (boost1FormulaElement) {
-        boost1FormulaElement.innerText = "Formula: boost gen1 prod by ^(factorial(log(points^transcend)))";
+        boost1FormulaElement.innerText = "Formula: boost gen1 prod by ^((factorial(slog(points)))^transcendPoints)^2";
     }
 
     if (boost2FormulaElement) {
-        boost2FormulaElement.innerText = "Formula: boost gen2.prod by ^(slog(sqrt(sqrt(sqrt(points)))))";
+        boost2FormulaElement.innerText = "Formula: boost gen2.prod by ^log(points^transcend)";
     }
 
     if (boost1ValueElement) {
