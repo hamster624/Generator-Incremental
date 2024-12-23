@@ -212,8 +212,6 @@ function saveGame() {
             boost1: transcendBoosts.boost1,
             boost2: transcendBoosts.boost2
         },
-        transcendBaseCost: transcendBaseCost.toString(),
-        transcendCostMultiplier: transcendCostMultiplier.toString(),
         playtime: playtime.toString(),
         memoryGame: {
             cards: memoryGameState.cards.map(card => ({
