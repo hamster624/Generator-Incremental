@@ -189,7 +189,7 @@ function getBoost1Value() {
 
 function getBoost2Value() {
     if (!transcendBoosts.boost2) return ExpantaNum(1);
-    return ExpantaNum(points.log10().pow(transcendPoints));
+    return ExpantaNum(points.slog().pow(transcendPoints));
 }
 
 function unlockTranscendBoost1() {
@@ -256,7 +256,7 @@ function renderTranscend() {
     const boost2ValueElement = document.getElementById('boost2Value');
 
     if (transcendPointsElement) {
-        transcendPointsElement.innerText = `Transcend Points: ${notate(transcendPoints, 2)}`;
+        transcendPointsElement.innerText = `${notate(transcendPoints, 2)}`;
     }
 
     if (boost1StatusElement) {
@@ -276,7 +276,7 @@ function renderTranscend() {
     }
 
     if (boost2FormulaElement) {
-        boost2FormulaElement.innerText = "Formula: boost gen1 prod by ^log(points^transcendPoints)";
+        boost2FormulaElement.innerText = "Formula: boost gen1 prod by ^slog(points^transcendPoints)";
     }
 
     if (boost1ValueElement) {
