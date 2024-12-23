@@ -46,7 +46,7 @@ function update() {
             if (i === 0) {
                 gen.prod = gen.prod.pow(ExpantaNum(5).pow(upgrades.gen1Boost1));
                 gen.prod = gen.prod.pow(ExpantaNum(25).pow(upgrades.gen1Boost2));
-            } else if (i === 0) {
+            } else if (i === 1) {
                 gen.prod = gen.prod.pow(ExpantaNum(2).pow(upgrades.gen2Boost1));
                 gen.prod = gen.prod.pow(ExpantaNum(10).pow(upgrades.gen2Boost2));
             }
