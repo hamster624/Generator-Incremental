@@ -212,7 +212,7 @@ function applyTranscendBoosts() {
 
     if (transcendBoosts.boost2) {
         const boost2Factor = getBoost2Value();
-        generators[1].prod = generators[1].prod.pow(boost2Factor);
+        generators[0].prod = generators[1].prod.pow(boost2Factor);
     }
 }
 
@@ -276,7 +276,7 @@ function renderTranscend() {
     }
 
     if (boost2FormulaElement) {
-        boost2FormulaElement.innerText = "Formula: boost gen2.prod by ^log(points^transcendPoints)";
+        boost2FormulaElement.innerText = "Formula: boost gen1 prod by ^log(points^transcendPoints)";
     }
 
     if (boost1ValueElement) {
