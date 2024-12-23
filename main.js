@@ -46,7 +46,7 @@ function update() {
             if (i === 0) {
                 gen.prod = gen.prod.pow(ExpantaNum(5).pow(upgrades.gen1Boost1));
                 gen.prod = gen.prod.pow(ExpantaNum(25).pow(upgrades.gen1Boost2));
-            } else if (i === 1) {
+            } else if (i === 0) {
                 gen.prod = gen.prod.pow(ExpantaNum(2).pow(upgrades.gen2Boost1));
                 gen.prod = gen.prod.pow(ExpantaNum(10).pow(upgrades.gen2Boost2));
             }
@@ -97,7 +97,7 @@ function notate(expnum, fp) {
     if (exp.lt("1e12")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1000000000000000) && exp.slog(10).gte(1.5)) {
-        return exp.toExponential(fp);  // Directly use toExponential to avoid unintended breaks in the number
+        return exp.toExponential(fp);
     } else if (exp.lt("10^^1000000000000000")) {
         return "10^^" + notate(exp.slog(10), fp);
     } else {
@@ -122,7 +122,7 @@ function notateAlt(expnum, fp) {
     if (exp.lt("1e9")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1.5)) {
-        return exp.toExponential(fp);  // Directly use toExponential
+        return exp.toExponential(fp);
     } else if (exp.slog().gt(3.4)) {
         return "10^^" + exp.slog(10).toFixed(fp);
     } else if (exp.slog(10).lt(1e15)) {
