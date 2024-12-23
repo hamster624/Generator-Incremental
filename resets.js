@@ -73,7 +73,7 @@ function toggleUpgradeInfo(upgrade) {
             Level: ${level}<br>
             Cost: ${cost} Rebirth Points<br>
             Boost Per Level: +^${boostPerLevel}<br>
-            Total Boost: *^${totalBoost}
+            Total Boost: +^${totalBoost}
         `;
         infoElement.style.display = 'block';
     }
@@ -189,7 +189,7 @@ function getBoost1Value() {
 
 function getBoost2Value() {
     if (!transcendBoosts.boost2) return ExpantaNum(1);
-    return ExpantaNum(points.slog().pow(transcendPoints));
+    return ExpantaNum(points.log10().pow(transcendPoints));
 }
 
 function unlockTranscendBoost1() {
@@ -212,7 +212,7 @@ function applyTranscendBoosts() {
 
     if (transcendBoosts.boost2) {
         const boost2Factor = getBoost2Value();
-        generators[0].prod = generators[1].prod.pow(boost2Factor);
+        generators[0].prod = generators[0].prod.pow(boost2Factor);
     }
 }
 
@@ -256,7 +256,7 @@ function renderTranscend() {
     const boost2ValueElement = document.getElementById('boost2Value');
 
     if (transcendPointsElement) {
-        transcendPointsElement.innerText = `${notate(transcendPoints, 2)}`;
+        transcendPointsElement.innerText = `Transcend Points: ${notate(transcendPoints, 2)}`;
     }
 
     if (boost1StatusElement) {
@@ -272,11 +272,11 @@ function renderTranscend() {
     }
 
     if (boost1FormulaElement) {
-        boost1FormulaElement.innerText = "Formula: boost gen1 prod by ^((factorial(slog(points)))^transcendPoints)^2";
+        boost1FormulaElement.innerText = "Formula: boost gen1 prod by ^((factoriaslog(points))) ^ transcendPoints ) ^ 2";
     }
 
     if (boost2FormulaElement) {
-        boost2FormulaElement.innerText = "Formula: boost gen1 prod by ^slog(points^transcendPoints)";
+        boost2FormulaElement.innerText = "Formula: boost gen2.prod by ^log(points^transcend)";
     }
 
     if (boost1ValueElement) {
