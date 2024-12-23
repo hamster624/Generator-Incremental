@@ -204,6 +204,7 @@ function saveGame() {
         })),
         rebirthPoints: rebirthPoints.toString(),
         hasRebirthed: hasRebirthed,
+        hasTranscended: hasTranscended,
         upgrades: Object.fromEntries(
             Object.entries(upgrades).map(([key, value]) => [key, value.toString()])
         ),
@@ -281,6 +282,7 @@ function loadGame() {
 
             rebirthPoints = ExpantaNum(saveData.rebirthPoints);
             hasRebirthed = saveData.hasRebirthed;
+            hasTranscended = saveData.hasTranscended;
             Object.entries(saveData.upgrades).forEach(([key, value]) => {
                 upgrades[key] = ExpantaNum(value);
             });
