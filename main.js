@@ -97,7 +97,7 @@ function notate(expnum, fp) {
     if (exp.lt("1e12")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1000000000000000) && exp.slog(10).gte(1.5)) {
-        return exp.toExponential(fp);
+        return exp.toExponential(fp);  // Directly use toExponential to avoid unintended breaks in the number
     } else if (exp.lt("10^^1000000000000000")) {
         return "10^^" + notate(exp.slog(10), fp);
     } else {
@@ -122,7 +122,7 @@ function notateAlt(expnum, fp) {
     if (exp.lt("1e9")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1.5)) {
-        return exp.toExponential(fp);
+        return exp.toExponential(fp);  // Directly use toExponential
     } else if (exp.slog().gt(3.4)) {
         return "10^^" + exp.slog(10).toFixed(fp);
     } else if (exp.slog(10).lt(1e15)) {
