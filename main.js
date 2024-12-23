@@ -212,7 +212,6 @@ function saveGame() {
             boost1: transcendBoosts.boost1,
             boost2: transcendBoosts.boost2
         },
-        transcendCount: transcendCount.toString(),
         transcendBaseCost: transcendBaseCost.toString(),
         transcendCostMultiplier: transcendCostMultiplier.toString(),
         playtime: playtime.toString(),
@@ -227,7 +226,7 @@ function saveGame() {
         },
         unlockedResets: {
             rebirthUnlocked: hasRebirthed,
-            transcendUnlocked: transcendPoints.gte(ExpantaNum("1ee120"))
+            transcendUnlocked: hasTranscended,
         }
     };
 
@@ -295,12 +294,8 @@ function loadGame() {
             if (transcendPoints.isNaN()) {
                 transcendPoints = ExpantaNum(0);
             }
-
-            transcendCount = ExpantaNum(saveData.transcendCount || 0);
             transcendBaseCost = ExpantaNum(saveData.transcendBaseCost || "1ee120");
             transcendCostMultiplier = ExpantaNum(saveData.transcendCostMultiplier || 1.5);
-
-            // Load unlocked reset states
             if (saveData.unlockedResets) {
                 hasRebirthed = saveData.unlockedResets.rebirthUnlocked;
                 if (transcendPoints.gte(ExpantaNum("1ee120"))) {
@@ -371,7 +366,6 @@ function resetGame() {
             boost1: false,
             boost2: false
         };
-        transcendCount = 0;
         transcendBaseCost = ExpantaNum("1ee120");
         transcendCostMultiplier = ExpantaNum(1.5);
         clickerScore = 0;
