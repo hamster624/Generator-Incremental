@@ -218,9 +218,9 @@ function applyTranscendBoosts() {
 
 function transcend() {
     const transcendThreshold = ExpantaNum("1ee120");
-    if (points.lt(transcendThreshold) && !hasTranscended) {
+    if (points.lt(transcendThreshold)) {
         return;
-    }
+    }    
 
     const gainedPoints = points.slog().sqrt();
     if (gainedPoints.gt(0)) {
@@ -245,6 +245,7 @@ function transcend() {
         renderTranscend();
     }
 }
+
 function renderTranscend() {
     const transcendPointsElement = document.getElementById('transcendPoints');
     const boost1StatusElement = document.getElementById('boost1Status');
