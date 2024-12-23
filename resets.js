@@ -73,7 +73,7 @@ function toggleUpgradeInfo(upgrade) {
             Level: ${level}<br>
             Cost: ${cost} Rebirth Points<br>
             Boost Per Level: +^${boostPerLevel}<br>
-            Total Boost: +^${totalBoost}
+            Total Boost: *^${totalBoost}
         `;
         infoElement.style.display = 'block';
     }
