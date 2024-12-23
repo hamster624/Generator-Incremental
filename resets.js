@@ -189,7 +189,7 @@ function getBoost1Value() {
 
 function getBoost2Value() {
     if (!transcendBoosts.boost2) return ExpantaNum(1);
-    return ExpantaNum(points.log10().pow(transcend));
+    return ExpantaNum(points.log10().pow(transcendPoints));
 }
 
 function unlockTranscendBoost1() {
