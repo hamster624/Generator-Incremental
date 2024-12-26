@@ -2,8 +2,8 @@ let points = ExpantaNum(0);
 
 const generators = [
     { count: ExpantaNum(1), cost: ExpantaNum(100), prod: ExpantaNum(0), costMult: ExpantaNum(1.5) },
-    { count: ExpantaNum(0), cost: ExpantaNum(2000), prod: ExpantaNum(0), costMult: ExpantaNum(2) },
-    { count: ExpantaNum(0), cost: ExpantaNum(10000000), prod: ExpantaNum(0), costMult: ExpantaNum(3) },
+    { count: ExpantaNum(0), cost: ExpantaNum(200), prod: ExpantaNum(0), costMult: ExpantaNum(2) },
+    { count: ExpantaNum(0), cost: ExpantaNum(1000000), prod: ExpantaNum(0), costMult: ExpantaNum(3) },
     { count: ExpantaNum(0), cost: ExpantaNum(1e17), prod: ExpantaNum(0), costMult: ExpantaNum(100) },
     { count: ExpantaNum(0), cost: ExpantaNum("1e105"), prod: ExpantaNum(0), costMult: ExpantaNum(100) },
     { count: ExpantaNum(0), cost: ExpantaNum("1e2900"), prod: ExpantaNum(0), costMult: ExpantaNum(100) },
@@ -39,7 +39,7 @@ function update() {
             gen.prod = ExpantaNum(0);
         } else {
             if (i === 0) {
-                gen.prod = gen.count;
+                gen.prod = ExpantaNum(gen.count);
             } else {
                 gen.prod = gen.count.pow(ExpantaNum(3).pow(i));
             }
@@ -72,7 +72,7 @@ function render() {
     document.getElementById('points').innerText = notationFunc(points, 5);
     
     generators.forEach((gen, i) => {
-        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(gen.prod, 2);
+        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(gen.prod * 10, 2);
         document.getElementById(`gen${i + 1}count`).innerText = notationFunc(gen.count, 2);
         document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 5);
     });
@@ -251,19 +251,14 @@ function loadGame() {
     if (saveObjectStr) {
         try {
             const saveObject = JSON.parse(saveObjectStr);
-
             let decodedData = fromBase64(saveObject.data);
             let shift = saveObject.shift;
-
             if (!decodedData) {
                 console.error("Failed to decode the save data correctly.");
                 return;
             }
-
             let saveDataString = deobfuscateData(decodedData, shift);
-
             const saveData = JSON.parse(saveDataString);
-
             points = ExpantaNum(saveData.points);
             clickerScore = ExpantaNum(saveData.clickerScore || 0);
 
@@ -380,7 +375,6 @@ function resetGame() {
 function showDeviceModal() {
     const modal = document.createElement('div');
     modal.classList.add('grayscale');
-  
     modal.innerHTML = `
       <div class="device-modal" style="background-color: black; padding: 20px; border-radius: 10px; inline-size: 300px; margin: auto; text-align: center; position: fixed; inset-block-start: 50%; inset-inline-start: 50%; transform: translate(-50%, -50%); z-index: 10000;">
         <h2>Are you on a PC?</h2>
