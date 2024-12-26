@@ -1,3 +1,4 @@
+
 let rebirthPoints = ExpantaNum(0);
 let transcendPoints = ExpantaNum(0);
 let hasRebirthed = false;
@@ -91,10 +92,10 @@ function getUpgradeCost(upgrade) {
 }
 
 function getBoostPerLevel(upgrade) {
-    if (upgrade === 'gen1Boost1') return 5;
+    if (upgrade === 'gen1Boost1') return 3;
     if (upgrade === 'gen2Boost1') return 2;
-    if (upgrade === 'gen1Boost2') return 25;
-    if (upgrade === 'gen2Boost2') return 10;
+    if (upgrade === 'gen1Boost2') return 12;
+    if (upgrade === 'gen2Boost2') return 5;
     if (upgrade === 'gen1Boost3') {
         return ExpantaNum.max(gen.count.log10().tetrate(1.15), 1);
     }
