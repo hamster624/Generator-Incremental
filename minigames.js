@@ -7,7 +7,7 @@ let totalPairs = 8;
 function startClicker() {
     document.getElementById("gameArea").innerHTML = `
         <h3>Clicker Game</h3>
-        <p>Click to increase the score, and no this does not boost your main game stats.</p>
+        <p>Click to increase your score—just a heads-up, this won’t affect your main game stats.</p>
         <button onclick="clickToIncreaseScore()">Click Me!</button>
         <p>Score: <span id="clickerScore">${clickerScore}</span></p>
         <button onclick="closeGame()">Close Game</button>
