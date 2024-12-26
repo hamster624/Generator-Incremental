@@ -24,7 +24,6 @@ function buyGenerator(id) {
     if (points.gte(gen.cost)) {
         points = points.sub(gen.cost);
         gen.count = gen.count.add(1);
-        gen.prod = gen.prod.add(ExpantaNum(1.05));
         gen.cost = gen.cost.pow(gen.costMult);
         applyUpgrades();
         render();
@@ -72,7 +71,7 @@ function render() {
     document.getElementById('points').innerText = notationFunc(points, 5);
     
     generators.forEach((gen, i) => {
-        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(gen.prod * 10, 2);
+        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(ExpantaNum(gen.prod * 10), 2);
         document.getElementById(`gen${i + 1}count`).innerText = notationFunc(gen.count, 2);
         document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 5);
     });
