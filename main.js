@@ -86,7 +86,13 @@ function formatNumberWithCommas(num) {
     if (num > 1e12) {
         return num.toString();
     }
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    let [integerPart, decimalPart] = num.toString().split('.');
+    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    if (decimalPart) {
+        decimalPart = decimalPart.replace(/0+$/, '');
+        return decimalPart ? `${integerPart}.${decimalPart}` : integerPart;
+    }
+    return integerPart;
 }
 
 function notate(expnum, fp) {
@@ -97,7 +103,7 @@ function notate(expnum, fp) {
     if (exp.lt("1e12")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1000000000000000) && exp.slog(10).gte(1.5)) {
-        return exp.toExponential(fp);  // Directly use toExponential to avoid unintended breaks in the number
+        return exp.toExponential(fp);
     } else if (exp.lt("10^^1000000000000000")) {
         return "10^^" + notate(exp.slog(10), fp);
     } else {
@@ -122,7 +128,7 @@ function notateAlt(expnum, fp) {
     if (exp.lt("1e9")) {
         return formatNumberWithCommas(exp.toNumber().toFixed(fp));
     } else if (exp.slog(10).lt(1.5)) {
-        return exp.toExponential(fp);  // Directly use toExponential
+        return exp.toExponential(fp);
     } else if (exp.slog().gt(3.4)) {
         return "10^^" + exp.slog(10).toFixed(fp);
     } else if (exp.slog(10).lt(1e15)) {
