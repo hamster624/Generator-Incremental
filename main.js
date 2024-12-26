@@ -236,11 +236,8 @@ function saveGame() {
     };
 
     let saveDataString = JSON.stringify(saveData);
-
     let { obfuscatedData, shift } = obfuscateData(saveDataString);
-
     const encodedSave = toBase64(obfuscatedData);
-
     if (encodedSave) {
         const saveWithShift = JSON.stringify({ data: encodedSave, shift: shift });
         localStorage.setItem('gameSave', saveWithShift);
@@ -301,7 +298,6 @@ function loadGame() {
                 transcendPoints = ExpantaNum(0);
             }
             transcendBaseCost = ExpantaNum(saveData.transcendBaseCost || "1ee120");
-            transcendCostMultiplier = ExpantaNum(saveData.transcendCostMultiplier || 1.5);
             if (saveData.unlockedResets) {
                 hasRebirthed = saveData.unlockedResets.rebirthUnlocked;
                 if (transcendPoints.gte(ExpantaNum("1ee120"))) {
@@ -373,7 +369,6 @@ function resetGame() {
             boost2: false
         };
         transcendBaseCost = ExpantaNum("1ee120");
-        transcendCostMultiplier = ExpantaNum(1.5);
         clickerScore = 0;
         playtime = 0;
         lastUpdateTime = performance.now();
