@@ -44,16 +44,16 @@ function update() {
                 gen.prod = gen.count.pow(ExpantaNum(3).pow(i));
             }
             if (i === 0) {
-                gen.prod = gen.prod.pow(ExpantaNum(5).pow(upgrades.gen1Boost1));
-                gen.prod = gen.prod.pow(ExpantaNum(25).pow(upgrades.gen1Boost2));
+                gen.prod = gen.prod.pow(ExpantaNum(3).pow(upgrades.gen1Boost1));
+                gen.prod = gen.prod.pow(ExpantaNum(2).pow(upgrades.gen1Boost2));
             } else if (i === 1) {
-                gen.prod = gen.prod.pow(ExpantaNum(2).pow(upgrades.gen2Boost1));
-                gen.prod = gen.prod.pow(ExpantaNum(10).pow(upgrades.gen2Boost2));
+                gen.prod = gen.prod.pow(ExpantaNum(12).pow(upgrades.gen2Boost1));
+                gen.prod = gen.prod.pow(ExpantaNum(5).pow(upgrades.gen2Boost2));
             }
         }
 
         if (i === 0 && upgrades.gen1Boost3.gt(0)) {
-            const boostFactor = ExpantaNum.max(gen.count.log10().tetrate(1.04), 1);
+            const boostFactor = ExpantaNum.max(gen.count.log10().tetrate(1.03), 1);
             gen.prod = gen.prod.pow(boostFactor);
         }
 
@@ -105,7 +105,7 @@ function notate(expnum, fp) {
     } else if (exp.slog(10).lt(1000000000000000) && exp.slog(10).gte(1.5)) {
         return exp.toExponential(fp);
     } else if (exp.lt("10^^1000000000000000")) {
-        return "10^^" + notate(exp.slog(10), fp);
+        return "10^^" + notate(exp.slog(10));
     } else {
         let str = exp.toHyperE();
         str = str.replace(/#0/g, '');
