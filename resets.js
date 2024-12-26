@@ -73,8 +73,8 @@ function toggleUpgradeInfo(upgrade) {
             <strong>Upgrade Info:</strong><br>
             Level: ${level}<br>
             Cost: ${cost} Rebirth Points<br>
-            Boost Per Level: +^${boostPerLevel}<br>
-            Total Boost: +^${totalBoost}
+            Boost Per Level: *^${boostPerLevel}<br>
+            Total Boost: *^${totalBoost}
         `;
         infoElement.style.display = 'block';
     }
@@ -97,7 +97,7 @@ function getBoostPerLevel(upgrade) {
     if (upgrade === 'gen1Boost2') return 12;
     if (upgrade === 'gen2Boost2') return 5;
     if (upgrade === 'gen1Boost3') {
-        return ExpantaNum.max(gen.count.log10().tetrate(1.15), 1);
+        return ExpantaNum.max(gen.count.log10().tetrate(1.03), 1);
     }
     return 1;
 }
