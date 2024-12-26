@@ -148,7 +148,6 @@
                 <button onclick="rebirth()" id="rebirthBuy" class="rebirth-button" enabled>
                     Rebirth (req: 1e7.169e16)
                 </button>
-                <div id="rebirthButtonLockOverlay" class="locked-overlay">Locked</div>
             </div>
             <div id="upgradeBoard">
                 <div class="upgrade-row">
@@ -205,9 +204,8 @@
 
         <div id="transcendSection" style="position: fixed; inset-block-start: 40%; inset-inline-start: 150px; background: rgba(0, 0, 0, 0.7); color: white; padding: 10px; border: 1px solid white; display: none;">
             <h3>Transcend Section</h3>
-            <p>Transcend Points: <span id="transcendPoints">0</span></p>
+            <p><span id="transcendPoints">0</span></p>
             <button onclick="transcend()">Transcend (req: 1ee120)</button>
-            <div id="transcendButtonLockOverlay" class="locked-overlay">Locked</div>
             <div id="boost1">
                 <h4>Boost 1</h4>
                 <div id="boost1Status">Boost 1: Locked (Requires 1 Transcend Point)</div>
