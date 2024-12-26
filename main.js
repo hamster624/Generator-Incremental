@@ -68,7 +68,7 @@ function update() {
 
 function render() {
     const notationFunc = useAltNotation ? notateAlt : notate;
-    document.getElementById('points').innerText = notationFunc(points, 5);
+    document.getElementById('points').innerText = notationFunc(points, 2);
     
     generators.forEach((gen, i) => {
         document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(ExpantaNum(gen.prod.mul(10)), 2);
