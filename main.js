@@ -73,7 +73,7 @@ function render() {
     generators.forEach((gen, i) => {
         document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(ExpantaNum(gen.prod.mul(10)), 2);
         document.getElementById(`gen${i + 1}count`).innerText = notationFunc(gen.count, 2);
-        document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 5);
+        document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 2);
     });
     if (upgrades.gen1Boost3.eq(1)) {
         document.getElementById('gen1Boost3Button').disabled = true;
