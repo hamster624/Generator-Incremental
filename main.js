@@ -71,7 +71,7 @@ function render() {
     document.getElementById('points').innerText = notationFunc(points, 5);
     
     generators.forEach((gen, i) => {
-        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(ExpantaNum(gen.prod * 10), 2);
+        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(ExpantaNum(gen.prod.mul(10)), 2);
         document.getElementById(`gen${i + 1}count`).innerText = notationFunc(gen.count, 2);
         document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 5);
     });
