@@ -15,8 +15,10 @@ let upgrades = {
 const rebirthThreshold = ExpantaNum("1e7.169e16");
 
 function calculateRebirthPoints() {
-    return ExpantaNum(points.log10().log10().ln().sqrt());
+    const rebirthPointsGain = points.log10().log10().ln().sqrt();
+    return rebirthPointsGain.isNaN() ? ExpantaNum(0) : rebirthPointsGain;
 }
+
 
 function rebirth() {
     if (points.lt(rebirthThreshold) && !hasRebirthed) {
@@ -40,24 +42,26 @@ function rebirth() {
 }
 function updateRebirthSection() {
     const rebirthButton = document.getElementById("rebirthButton");
-    const lockOverlay = document.getElementById("rebirthButtonLockOverlay");
+    const rebirthGainElement = document.getElementById("rebirthGain");
+    
     if (points.gte(rebirthThreshold) || hasRebirthed || hasTranscended) {
-        lockOverlay.style.display = 'none';
-        rebirthButton.innerText = "Rebirth";
+        const gainedPoints = calculateRebirthPoints();
+        rebirthButton.innerText = `Rebirth (Gain: ${notate(gainedPoints, 2)} points)`;
         rebirthButton.style.backgroundColor = "#5cb85c";
         rebirthButton.disabled = false;
+        if (rebirthGainElement) {
+            rebirthGainElement.innerText = `You will gain: ${notate(gainedPoints, 2)} rebirth points.`;
+        }
     } else {
-        lockOverlay.style.display = 'flex';
         rebirthButton.innerText = "Locked (req: 1e7.169e16)";
         rebirthButton.style.backgroundColor = "#333";
         rebirthButton.disabled = true;
+        if (rebirthGainElement) {
+            rebirthGainElement.innerText = "You will gain: 0 points.";
+        }
     }
-
-    document.querySelectorAll(".upgrade-button").forEach(button => {
-        button.disabled = !hasRebirthed;
-        button.style.backgroundColor = hasRebirthed ? "#5cb85c" : "#333";
-    });
 }
+
 
 function toggleUpgradeInfo(upgrade) {
     const infoElement = document.getElementById(`${upgrade}Info`);
@@ -302,20 +306,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 function updateTranscendSection() {
     const transcendButton = document.getElementById("transcendButton");
-    const lockOverlay = document.getElementById("transcendButtonLockOverlay");
-
+    const transcendGainElement = document.getElementById("transcendGain");
+    
     if (points.gte(ExpantaNum("1ee120")) || hasTranscended) {
-        lockOverlay.style.display = 'none';
-        transcendButton.innerText = "Transcend";
+        const gainedPoints = points.slog().sqrt();
+        transcendButton.innerText = `Transcend (Gain: ${notate(gainedPoints, 2)} points)`;
         transcendButton.style.backgroundColor = "#5cb85c";
         transcendButton.disabled = false;
+        if (transcendGainElement) {
+            transcendGainElement.innerText = `You will gain: ${notate(gainedPoints, 2)} transcend points.`;
+        }
     } else {
-        lockOverlay.style.display = 'flex';
         transcendButton.innerText = "Locked (req: 1ee120)";
         transcendButton.style.backgroundColor = "#333";
         transcendButton.disabled = true;
+        if (transcendGainElement) {
+            transcendGainElement.innerText = "You will gain: 0 points.";
+        }
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     updateTranscendSection();
