@@ -199,7 +199,7 @@ function unlockTranscendBoost1() {
 }
 
 function unlockTranscendBoost2() {
-    if (transcendPoints.gte(ExpantaNum(100))) {
+    if (transcendPoints.gte(ExpantaNum(500))) {
         transcendBoosts.boost2 = true;
     }
 }
@@ -268,7 +268,7 @@ function renderTranscend() {
     if (boost2StatusElement) {
         boost2StatusElement.innerText = transcendBoosts.boost2
             ? "Boost 2: Active"
-            : "Boost 2: Locked (Requires 100 Transcend Points)";
+            : "Boost 2: Locked (Requires 500 Transcend Points)";
     }
 
     if (boost1FormulaElement) {
