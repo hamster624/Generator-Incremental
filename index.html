@@ -16,6 +16,8 @@
         <h2>Stats</h2>
         <p>Points: <span id="overlay-points">0</span></p>
         <p>Rebirth Points: <span id="overlay-rebirth-points">0</span></p>
+        <p><span id="overlay-transcend-points">0</span></p>
+        <p><span id="overlay-playtime">0</span></p>
     </div>
     
 </head>
@@ -98,7 +100,7 @@
             <div></div>
             <a href="https://hamster624.github.io/Calculator/" target="_blank">Check out my Calculator</a>
           </div>
-        <button id="openMenuButton">MiniGames</button>
+        <button id="openMenuButton" style="position: fixed; inset-block-start: 50px; font-size: 18px;">MiniGames</button>
 
         <div id="menu" style="display: none; position: fixed; inset-block-start: 0; inset-inline-start: 0; padding: 10px; background-color: rgba(7, 2, 2, 0.7); color: white; font-size: 14px; z-index: 1000;">
             <h1>MiniGames</h1>
@@ -121,13 +123,13 @@
           <div class="guide-section">
             <h3 onclick="toggleSection('rebirth')">Rebirth</h3>
             <div class="guide-section-content" id="rebirth">
-              <textarea rows="5" cols="50" placeholder="The first reset layer. Basically the start of your journey. Formula:log(log(ln(sqrt(points)))) a bit overkill"></textarea>
+              <textarea rows="5" cols="50" placeholder="The first reset layer. Basically the start of your journey. Formula:log(log(ln(sqrt(points)))) a bit overkill."></textarea>
             </div>
           </div>
           <div class="guide-section">
             <h3 onclick="toggleSection('transcend')">Transcend</h3>
             <div class="guide-section-content" id="transcend">
-              <textarea rows="5" cols="50" placeholder="The second reset layer. Nothing much to know here. Formula:slog(cbrt(points))"></textarea>
+              <textarea rows="5" cols="50" placeholder="The second reset layer. Nothing much to know here. Formula:slog(cbrt(points))."></textarea>
             </div>
           </div>
           <div class="guide-section">
@@ -242,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rebirthSection.style.display = rebirthSection.style.display === 'none' ? 'block' : 'none';
     };
 });
+
     </script>
 </body>
 </html>
