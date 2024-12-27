@@ -1,4 +1,3 @@
-
 let rebirthPoints = ExpantaNum(0);
 let transcendPoints = ExpantaNum(0);
 let hasRebirthed = false;
