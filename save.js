@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const saveButton = document.createElement('button');
     saveButton.innerText = "Copy Save";
+    saveButton.id = "SaveButton";
     saveButton.style.position = 'fixed';
     saveButton.style.top = '150px';
     saveButton.style.left = '10px';
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadButton = document.createElement('button');
     loadButton.innerText = "Load Save";
+    loadButton.id = "loadButton";
     loadButton.style.position = 'fixed';
     loadButton.style.top = '100px';
     loadButton.style.left = '10px';
@@ -33,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("Failed to copy save: " + err);
             });
         } else {
-            alert("No game save found in localStorage.");
+            alert("No game save found.");
         }
     }
 
