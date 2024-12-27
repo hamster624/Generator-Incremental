@@ -401,7 +401,45 @@ function showDeviceModal() {
   
   function adjustForNonPC() {
     document.body.style.fontSize = '14px';
-  }
+    
+    const statsOverlay = document.getElementById("stats-overlay");
+    if (statsOverlay) {
+        statsOverlay.style.position = 'absolute';
+        statsOverlay.style.right = '-300px';
+    }
+    
+    const minigamesButton = document.getElementById("openMenuButton");
+    if (minigamesButton) {
+        minigamesButton.style.position = 'absolute';
+        minigamesButton.style.left = '-300px';
+    }
+    const savebutton = document.getElementById("SaveButton");
+    if (savebutton) {
+        savebutton.style.position = 'absolute';
+        savebutton.style.left = '-300px';
+    }
+    const loadButton = document.getElementById("loadButton");
+    if (loadButton) {
+        loadButton.style.position = 'absolute';
+        loadButton.style.left = '-300px';
+    }
+    const transcend = document.getElementById("transcendButton");
+    if (transcend) {
+        transcend.style.position = 'absolute';
+        transcend.style.left = '-300px';
+    }
+    const rebirth = document.getElementById("rebirthButton");
+    if (rebirth) {
+        rebirth.style.position = 'absolute';
+        rebirth.style.left = '-300px';
+    }
+    const calculator = document.getElementById("calculatorButton");
+    if (calculator) {
+        calculator.style.position = 'absolute';
+        calculator.style.left = '-300px';
+    }
+}
+
   
   window.onload = () => {
     showDeviceModal();
@@ -411,11 +449,11 @@ function showDeviceModal() {
   let lastUpdateTime = performance.now();
   
   function formatTime(seconds) {
-      const days = Math.floor(seconds / 86400);
-      const hours = Math.floor((seconds % 86400) / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const secs = Math.floor(seconds % 60);
-      const ms = Math.floor((seconds % 1) * 1000);
+      const days = ExpantaNum.floor(seconds / 86400);
+      const hours = ExpantaNum.floor((seconds % 86400) / 3600);
+      const minutes = ExpantaNum.floor((seconds % 3600) / 60);
+      const secs = ExpantaNum.floor(seconds % 60);
+      const ms = ExpantaNum.floor((seconds % 1) * 1000);
   
       return `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`;
   }
@@ -427,14 +465,9 @@ function showDeviceModal() {
   
       document.getElementById("overlay-points").textContent = `${document.getElementById("points").textContent}`;
       document.getElementById("overlay-rebirth-points").textContent = `${document.getElementById("rebirthPoints").textContent}`;
+      document.getElementById("overlay-transcend-points").textContent = `${document.getElementById("transcendPoints").textContent}`;
       document.getElementById("overlay-playtime").textContent = `Playtime: ${formatTime(playtime)}`;
   }
-  
-  document.body.insertAdjacentHTML('beforeend', `
-      <div id="overlay" style="position: fixed; inset-block-start: 0; inset-inline-start: 0; padding: 10px; background-color: rgba(7, 2, 2, 0.7); color: white; font-size: 14px; z-index: 1000;">
-          <div id="overlay-playtime" style="position: absolute; inset-block-start: 275px;">Playtime: 00:00:00:00.000</div>
-      </div>
-  `);
   
   setInterval(updateStatsOverlay, 1);
   function toggleGuide() {
