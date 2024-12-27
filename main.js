@@ -406,38 +406,18 @@ function showDeviceModal() {
     if (statsOverlay) {
         statsOverlay.style.position = 'absolute';
         statsOverlay.style.right = '-150px';
-    }
-    
-    const minigamesButton = document.getElementById("openMenuButton");
-    if (minigamesButton) {
-        minigamesButton.style.position = 'absolute';
-        minigamesButton.style.left = '-150px';
-    }
-    const savebutton = document.getElementById("SaveButton");
-    if (savebutton) {
-        savebutton.style.position = 'absolute';
-        savebutton.style.left = '-150px';
-    }
-    const loadButton = document.getElementById("loadButton");
-    if (loadButton) {
-        loadButton.style.position = 'absolute';
-        loadButton.style.left = '-150px';
+
     }
     const transcend = document.getElementById("transcendButton");
     if (transcend) {
         transcend.style.position = 'absolute';
-        transcend.style.top = '1450px';
+        transcend.style.top = '1650px';
     }
     
     const rebirth = document.getElementById("rebirthButton");
     if (rebirth) {
         rebirth.style.position = 'absolute';
-        rebirth.style.top = '1500px';
-    }    
-    const calculator = document.getElementById("calculatorButton");
-    if (calculator) {
-        calculator.style.position = 'absolute';
-        calculator.style.left = '-150px';
+        rebirth.style.top = '1700px';
     }
 }
 
