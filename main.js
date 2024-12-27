@@ -405,7 +405,7 @@ function showDeviceModal() {
     const statsOverlay = document.getElementById("stats-overlay");
     if (statsOverlay) {
         statsOverlay.style.position = 'absolute';
-        statsOverlay.style.right = '-100px';
+        statsOverlay.style.right = '-150px';
     }
     
     const minigamesButton = document.getElementById("openMenuButton");
@@ -426,13 +426,13 @@ function showDeviceModal() {
     const transcend = document.getElementById("transcendButton");
     if (transcend) {
         transcend.style.position = 'absolute';
-        transcend.style.top = '1250px';
+        transcend.style.top = '1350px';
     }
     
     const rebirth = document.getElementById("rebirthButton");
     if (rebirth) {
         rebirth.style.position = 'absolute';
-        rebirth.style.top = '1300px';
+        rebirth.style.top = '1400px';
     }    
     const calculator = document.getElementById("calculatorButton");
     if (calculator) {
