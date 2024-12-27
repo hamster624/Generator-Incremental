@@ -1,7 +1,7 @@
 // This calculator is made by me if you want to check it out here is the link:https://hamster624.github.io/Calculator/
 document.addEventListener('DOMContentLoaded', function() {
   const calculatorHTML = `
-      <div id="calculator" style="display: none; position: fixed; inset-block-start: 20%; inset-inline-start: 20%; inline-size: 400px; background: black; color: white; border: 1px solid white; padding: 20px; z-index: 1000; max-block-size: 80vh; overflow-y: auto;">
+      <div id="calculatormenu" style="display: none; position: fixed; inset-block-start: 20%; inset-inline-start: 20%; inline-size: 400px; background: black; color: white; border: 1px solid white; padding: 20px; z-index: 1000; max-block-size: 80vh; overflow-y: auto;">
           <h3 style="text-align: center;">Calculator</h3>
           <input id="num1" type="text" placeholder="Enter number 1" style="inline-size: 90%; margin-block-end: 10px; background: black; color: white; border: 1px solid white;" />
           <input id="num2" type="text" placeholder="Enter number 2" style="inline-size: 90%; margin-block-end: 10px; background: black; color: white; border: 1px solid white;" />
@@ -140,11 +140,11 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   window.openCalculator = function() {
-      document.getElementById("calculator").style.display = "block";
+      document.getElementById("calculatormenu").style.display = "block";
   };
 
   window.closeCalculator = function() {
-      document.getElementById("calculator").style.display = "none";
+      document.getElementById("calculatormenu").style.display = "none";
   };
 
   function notate(expnum, fp) {
@@ -182,10 +182,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     repeatLastOperation();
-  const calculatorButtonHTML = `
-      <button onclick="openCalculator()" style="position: fixed; inset-block-start: 10px; inset-inline-start: 10px; background: black; color: white; border: 1px solid white; padding: 10px; z-index: 1000;">
-          Calculator
-      </button>
-  `;
-  document.body.insertAdjacentHTML("beforeend", calculatorButtonHTML);
+    const calculatorButtonHTML = `
+    <button id="calculatorButton" onclick="openCalculator()" style="position: fixed; inset-block-start: 10px; inset-inline-start: 10px; background: black; color: white; border: 1px solid white; padding: 10px; z-index: 1000;">
+        Calculator
+    </button>
+`;
+document.body.insertAdjacentHTML("beforeend", calculatorButtonHTML);
 });
