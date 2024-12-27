@@ -152,14 +152,14 @@ function loadMemoryGameStateFromSaveGame(saveData) {
 
 let isGameRunning = false;
 let gameInterval;
-let snake = [{x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5}];  // Start with 3 segments
+let snake = [{x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5}];
 let direction = {x: 1, y: 0};
 let food = {x: 10, y: 10};
 let boardSize = 20;
 
 function startSnake() {
     isGameRunning = true;
-    snake = [{x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5}];  // Start with 3 segments
+    snake = [{x: 5, y: 5}, {x: 4, y: 5}, {x: 3, y: 5}];
     direction = {x: 1, y: 0};
     food = generateFood();
 
@@ -226,8 +226,8 @@ function updateSnakeGame(board) {
         segmentElement.style.position = 'absolute';
         segmentElement.style.width = '20px';
         segmentElement.style.height = '20px';
-        segmentElement.style.backgroundColor = index === 0 ? 'darkgreen' : 'green';  // Head is darker
-        segmentElement.style.borderRadius = '50%';  // Make the snake round
+        segmentElement.style.backgroundColor = index === 0 ? 'darkgreen' : 'green';
+        segmentElement.style.borderRadius = '50%';
         segmentElement.style.left = `${segment.x * 20}px`;
         segmentElement.style.top = `${segment.y * 20}px`;
         board.appendChild(segmentElement);
