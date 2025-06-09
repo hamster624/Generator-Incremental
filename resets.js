@@ -193,7 +193,7 @@ function getBoost1Value() {
 
 function getBoost2Value() {
     if (!transcendBoosts.boost2) return ExpantaNum(1);
-    return ExpantaNum(points.log10().pow(transcendPoints));
+    return ExpantaNum(points.log10().pow(transcendPoints.tetr(1.75)));
 }
 
 function unlockTranscendBoost1() {
@@ -280,15 +280,15 @@ function renderTranscend() {
     }
 
     if (boost2FormulaElement) {
-        boost2FormulaElement.innerText = "Formula: boost gen1 prod by ^log(points^transcend)";
+        boost2FormulaElement.innerText = "Formula: boost gen1 prod by ^log(points^(transcend^^1.75))";
     }
 
     if (boost1ValueElement) {
-        boost1ValueElement.innerText = `Current Boost: ${notate(getBoost1Value(), 2)}`;
+        boost1ValueElement.innerText = `Current Boost: ${notate(getBoost1Value())}`;
     }
 
     if (boost2ValueElement) {
-        boost2ValueElement.innerText = `Current Boost: ${notate(getBoost2Value(), 2)}`;
+        boost2ValueElement.innerText = `Current Boost: ${notate(getBoost2Value())}`;
     }
 
     const transcendButton = document.getElementById('transcendButton');
@@ -309,11 +309,11 @@ function updateTranscendSection() {
     
     if (points.gte(ExpantaNum("1ee120")) || hasTranscended) {
         const gainedPoints = points.slog().sqrt();
-        transcendButton.innerText = `Transcend (Gain: ${notate(gainedPoints, 2)} points)`;
+        transcendButton.innerText = `Transcend (Gain: ${notate(gainedPoints)} points)`;
         transcendButton.style.backgroundColor = "#5cb85c";
         transcendButton.disabled = false;
         if (transcendGainElement) {
-            transcendGainElement.innerText = `You will gain: ${notate(gainedPoints, 2)} transcend points.`;
+            transcendGainElement.innerText = `You will gain: ${notate(gainedPoints)} transcend points.`;
         }
     } else {
         transcendButton.innerText = "Locked (req: 1ee120)";

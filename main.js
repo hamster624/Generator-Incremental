@@ -67,13 +67,12 @@ function update() {
 }
 
 function render() {
-    const notationFunc = useAltNotation ? notateAlt : notate;
-    document.getElementById('points').innerText = notationFunc(points, 2);
+    document.getElementById('points').innerText = notate(points, 2);
     
     generators.forEach((gen, i) => {
-        document.getElementById(`gen${i + 1}prod`).innerText = notationFunc(ExpantaNum(gen.prod.mul(10)), 2);
-        document.getElementById(`gen${i + 1}count`).innerText = notationFunc(gen.count, 2);
-        document.getElementById(`gen${i + 1}cost`).innerText = notationFunc(gen.cost, 2);
+        document.getElementById(`gen${i + 1}prod`).innerText = notate(ExpantaNum(gen.prod.mul(10)));
+        document.getElementById(`gen${i + 1}count`).innerText = notate(gen.count);
+        document.getElementById(`gen${i + 1}cost`).innerText = notate(gen.cost);
     });
     if (upgrades.gen1Boost3.eq(1)) {
         document.getElementById('gen1Boost3Button').disabled = true;
@@ -99,16 +98,6 @@ function notate(expnum) {
     return format(exp, 2)
 }
 
-function notateAlt(expnum) {
-    const exp = ExpantaNum(expnum);
-    return ExpantaNum(exp)
-}
-
-let useAltNotation = false;
-
-function toggleNotation() {
-    useAltNotation = !useAltNotation;
-}
 function obfuscateData(str) {
     const shift = Math.floor(Math.random() * 256);
     let obfuscated = '';
