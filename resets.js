@@ -127,7 +127,7 @@ function buyUpgrade(key, upgradeCost) {
 function renderRebirth() {
     const rebirthPointsElement = document.getElementById('rebirthPoints');
     if (rebirthPointsElement) {
-        rebirthPointsElement.innerText = notate(rebirthPoints, 2);
+        rebirthPointsElement.innerText = notate(rebirthPoints, 6);
     }
 
     Object.entries(upgrades).forEach(([key, value]) => {

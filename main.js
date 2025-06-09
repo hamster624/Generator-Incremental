@@ -94,56 +94,14 @@ function formatNumberWithCommas(num) {
     return integerPart;
 }
 
-function notate(expnum, fp) {
+function notate(expnum) {
     const exp = ExpantaNum(expnum);
-    if (exp.slog(10).gte(5)) {
-        return exp.toHyperE();
-    }
-    if (exp.lt("1e12")) {
-        return formatNumberWithCommas(exp.toNumber().toFixed(fp));
-    } else if (exp.slog(10).lt(1000000000000000) && exp.slog(10).gte(1.5)) {
-        return exp.toExponential(fp);
-    } else if (exp.lt("10^^1000000000000000")) {
-        return "10^^" + notate(exp.slog(10));
-    } else {
-        let str = exp.toHyperE();
-        str = str.replace(/#0/g, '');
-        str = str.replace(/(#1)+/g, (match, p1) => {
-            const repeatCount = match.length / p1.length;
-            if (repeatCount === 1) {
-                return '';
-            }
-            return `(#1^${repeatCount})`;
-        });
-        return str;
-    }
+    return format(exp, 2)
 }
 
-function notateAlt(expnum, fp) {
+function notateAlt(expnum) {
     const exp = ExpantaNum(expnum);
-    if (exp.slog(10).gte(5)) {
-        return exp.toHyperE();
-    }
-    if (exp.lt("1e9")) {
-        return formatNumberWithCommas(exp.toNumber().toFixed(fp));
-    } else if (exp.slog(10).lt(1.5)) {
-        return exp.toExponential(fp);
-    } else if (exp.slog().gt(3.4)) {
-        return "10^^" + exp.slog(10).toFixed(fp);
-    } else if (exp.slog(10).lt(1e15)) {
-        return "e" + exp.log10().toFixed(fp);
-    } else {
-        let str = exp.toHyperE();
-        str = str.replace(/#0/g, '');
-        str = str.replace(/(#1)+/g, (match, p1) => {
-            const repeatCount = match.length / p1.length;
-            if (repeatCount === 1) {
-                return '';
-            }
-            return `(#1^${repeatCount})`;
-        });
-        return str;
-    }
+    return ExpantaNum(exp)
 }
 
 let useAltNotation = false;
